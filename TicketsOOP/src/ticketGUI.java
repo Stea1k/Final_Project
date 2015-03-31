@@ -18,11 +18,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Date;
+
 import javax.swing.JCheckBox;
 
 
@@ -81,6 +88,13 @@ public class ticketGUI extends JFrame {
 		gbc_lblTicketSystem.gridx = 0;
 		gbc_lblTicketSystem.gridy = 0;
 		contentPane.add(lblTicketSystem, gbc_lblTicketSystem);
+		
+		JButton btnSaveData = new JButton("Save Data");
+		GridBagConstraints gbc_btnSaveData = new GridBagConstraints();
+		gbc_btnSaveData.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSaveData.gridx = 2;
+		gbc_btnSaveData.gridy = 0;
+		contentPane.add(btnSaveData, gbc_btnSaveData);
 		
 		JButton btnAddTicket = new JButton("Add Ticket");
 				
@@ -239,5 +253,32 @@ public class ticketGUI extends JFrame {
 				ticketGUI.this.ResolvedListModel.removeElement(toDelete);
 			}
 		});
+		final File save_file = new File("save_file.txt");
+		btnSaveData.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					exportList(ticketListModel,ResolvedListModel,save_file);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+	public static void exportList(ListModel unresolved,ListModel resolved, File f) throws IOException {
+	    PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(f), "UTF-8"));
+	    try {
+	        int lenU = unresolved.getSize();
+	        int lanR = resolved.getSize();
+	        for (int i = 0; i < lenU; i++) {
+	            pw.println(unresolved.getElementAt(i).toString());
+	        }
+	        for(int i = 0; i<lanR; i ++){
+	        	pw.println(resolved.getElementAt(i).toString());
+	        }
+	    } finally {
+	        pw.close();
+	    }
 	}
 }
