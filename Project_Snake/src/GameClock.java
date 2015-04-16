@@ -1,5 +1,7 @@
 import java.util.TimerTask;
 
+import javax.sound.sampled.LineUnavailableException;
+
 public class GameClock extends TimerTask {
 
 	Snake snake;
@@ -28,7 +30,12 @@ public class GameClock extends TimerTask {
 			}
 			case SnakeGame.DURING_GAME: {
 				//
-				snake.moveSnake();
+				try {
+					snake.moveSnake();
+				} catch (LineUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (snake.didEatKibble(kibble) == true) {		
 					//tell kibble to update
 					kibble.moveKibble(snake);

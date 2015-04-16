@@ -15,7 +15,6 @@ public class Kibble {
 		//Kibble needs to know where the snake is, so it does not create a kibble in the snake
 		//Pick a random location for kibble, check if it is in the snake
 		//If in snake, try again
-		
 		moveKibble(s);
 	}
 	

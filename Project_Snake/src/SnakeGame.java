@@ -1,10 +1,12 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.Timer;
 
 import javax.swing.*;
 
 
-public class SnakeGame {
+public class SnakeGame extends JFrame{
 
 	//changed pixels from 501 x 501 to 505 x 528
 	public final static int xPixelMaxDimension = 505;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
@@ -32,22 +34,28 @@ public class SnakeGame {
 	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change it's value
 
-	protected static long clockInterval = 500; //controls game speed
+	protected static long clockInterval = 400; //controls game speed
 	//Every time the clock ticks, the snake moves
 	//This is the time between clock ticks, in milliseconds
 	//1000 milliseconds = 1  second.
 	
 	static JFrame snakeFrame;
+	static JFrame menuFrame;
+
+	static JMenuBar menuBar;
+	static JMenu snakeMenu;
+	
 	static DrawSnakeGamePanel snakePanel;
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
 
 	private static void createAndShowGUI() {
-		//Create and set up the window.
+		//Create and set up the window.//
 		snakeFrame = new JFrame();
+		
 		snakeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		//Size of panel in pixels
 		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
 		
