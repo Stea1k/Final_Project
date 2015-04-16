@@ -1,4 +1,8 @@
+import java.io.IOException;
 import java.util.TimerTask;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GameClock extends TimerTask {
 
@@ -28,7 +32,18 @@ public class GameClock extends TimerTask {
 			}
 			case SnakeGame.DURING_GAME: {
 				//
-				snake.moveSnake();
+				try {
+					snake.moveSnake();
+				} catch (UnsupportedAudioFileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (LineUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (snake.didEatKibble(kibble) == true) {		
 					//tell kibble to update
 					kibble.moveKibble(snake);
