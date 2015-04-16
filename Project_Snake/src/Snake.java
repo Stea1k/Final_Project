@@ -1,18 +1,6 @@
 
 import java.awt.Point;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Snake {
 
@@ -125,7 +113,7 @@ public class Snake {
 //		justAteMustGrowThisMuch += growthIncrement;
 //	}
 
-	protected void moveSnake() throws LineUnavailableException{
+	protected void moveSnake(){
 		//Called every clock tick
 		
 		//Must check that the direction snake is being sent in is not contrary to current heading
@@ -243,24 +231,7 @@ public class Snake {
 			}
 		}
 		else {
-			//Snake has just eaten. leave tail as is.  Decrease justAte... variable by 1.File file = new File("dragon_bit.wav");
-			try {
-				File file = new File("dragon_bit.wav");
-				AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-				AudioFormat format = audioStream.getFormat();
-				DataLine.Info info = new DataLine.Info(Clip.class, format);
-				Clip audioClip = (Clip)AudioSystem.getLine(info);
-				audioClip.open(audioStream);
-				audioClip.start();
-				audioClip.close();
-				audioStream.close();
-			}catch (UnsupportedAudioFileException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//Snake has just eaten. leave tail as is.  Decrease justAte... variable by 1.
 			justAteMustGrowThisMuch -- ;
 			snakeSize ++;
 		}
