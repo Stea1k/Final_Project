@@ -5,7 +5,6 @@ import java.util.Timer;
 
 import javax.swing.*;
 
-
 public class SnakeGame extends JFrame{
 
 	//changed pixels from 501 x 501 to 505 x 528
@@ -22,6 +21,8 @@ public class SnakeGame extends JFrame{
 	protected static Kibble kibble;
 
 	protected static Score score;
+	
+	protected static Block block = new Block();
 
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
@@ -34,7 +35,7 @@ public class SnakeGame extends JFrame{
 	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change it's value
 
-	protected static long clockInterval = 400; //controls game speed
+	protected static long clockInterval = 500; //controls game speed
 	//Every time the clock ticks, the snake moves
 	//This is the time between clock ticks, in milliseconds
 	//1000 milliseconds = 1  second.
@@ -64,7 +65,7 @@ public class SnakeGame extends JFrame{
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
 
-		snakePanel = new DrawSnakeGamePanel(snake, kibble, score);
+		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, block);
 		snakePanel.setFocusable(true);
 		snakePanel.requestFocusInWindow(); //required to give this component the focus so it can generate KeyEvents
 
@@ -82,7 +83,7 @@ public class SnakeGame extends JFrame{
 		ySquares = yPixelMaxDimension / squareSize;
 
 		snake = new Snake(xSquares, ySquares, squareSize);
-		kibble = new Kibble(snake);
+		kibble = new Kibble(snake,block);
 		score = new Score();
 
 		gameStage = BEFORE_GAME;
@@ -90,7 +91,7 @@ public class SnakeGame extends JFrame{
 
 	protected static void newGame() {
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel);
+		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel,block);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
 	}
 

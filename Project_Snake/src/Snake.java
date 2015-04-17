@@ -21,6 +21,7 @@ public class Snake {
 
 	private boolean hitWall = false;
 	private boolean ateTail = false;
+	private boolean hitBlock = false;
 
 	private int snakeSquares[][];  //represents all of the squares on the screen
 	//NOT pixels!
@@ -146,7 +147,7 @@ public class Snake {
 		//Or eat your tail? Don't move. 
 
 		//removed hitWall condition.
-		if (hitWall == true || ateTail == true) {
+		if (hitBlock == true || ateTail == true) {
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
 		}
@@ -197,25 +198,31 @@ public class Snake {
 //			return;
 //		}
 		
-		//Mirrors the Snake for X coordinates
+		//Mirrors the Snake for X and Y coordinates
 		if (snakeHeadX >= maxX || snakeHeadX < 0){
 			if(snakeHeadX >= maxX){
 				snakeHeadX = 0;
-			}
-			else if(snakeHeadX < 0){
+			}else if(snakeHeadX < 0){
 				snakeHeadX = maxX -1;
 			}
 		}
-
-		//Mirrors the Snake for Y coordinates
-		if(snakeHeadY >= maxY || snakeHeadY < 0 ) {
+		if(snakeHeadY >= maxY || snakeHeadY < 0){ 
 			if(snakeHeadY >= maxY){
 				snakeHeadY = 0;
 			}else if(snakeHeadY < 0){
 				snakeHeadY = maxY -1;
 			}
+			return;
 		}
-
+		
+		//Does this make the snake hit a block?
+		if(snakeHeadX == 0 && snakeHeadY == 0 || snakeHeadX == 9 && snakeHeadY == 9
+		|| snakeHeadX == 9 && snakeHeadY == 0 || snakeHeadX == 0 && snakeHeadY == 0){
+			hitBlock = true;
+			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+			return;
+		}
+		
 		//Does this make the snake eat its tail?
 
 		if (snakeSquares[snakeHeadX][snakeHeadY] != 0) {
@@ -243,24 +250,22 @@ public class Snake {
 		else {
 			//Snake has just eaten. leave tail as is.  Decrease justAte... variable by 1.
 			//Play audio file upon consumption of kibble.
-			File audioFile = new File("dragon_bit.wav");
-			 /////////////////////////////////////////////////////////////////////////////////////////////////////
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-			AudioFormat format = audioStream.getFormat();
-			DataLine.Info info = new DataLine.Info(Clip.class, format);
-			Clip audioClip = (Clip) AudioSystem.getLine(info);
-			audioClip.open(audioStream);
-			audioClip.loop(1);
+//			File audioFile = new File("dragon_bit.wav");
+//			 /////////////////////////////////////////////////////////////////////////////////////////////////////
+//			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+//			AudioFormat format = audioStream.getFormat();
+//			DataLine.Info info = new DataLine.Info(Clip.class, format);
+//			Clip audioClip = (Clip) AudioSystem.getLine(info);
+//			audioClip.open(audioStream);
+//			audioClip.loop(0);
 			justAteMustGrowThisMuch -- ;
 			snakeSize ++;
 		}
-		
 		lastHeading = currentHeading; //Update last confirmed heading
-
 	}
 
-	protected boolean didHitWall(){
-		return hitWall;
+	protected boolean didHitBlock(){
+		return hitBlock;
 	}
 
 	protected boolean didEatTail(){
@@ -301,7 +306,7 @@ public class Snake {
 		//that it has filled the screen. Win!
 		for (int x = 0 ; x < maxX ; x++) {
 			for (int y = 0 ; y < maxY ; y++){
-				if (snakeSquares[x][y] == 0) {
+				if (snakeSquares[x][y] == 4) {
 					//there is still empty space on the screen, so haven't won
 					return false;
 				}
@@ -314,18 +319,18 @@ public class Snake {
 	}
 
 	public void reset() {
-		hitWall = false;
+		hitBlock = false;
 		ateTail = false;
 		fillSnakeSquaresWithZeros();
 		createStartSnake();
 
 	}
-
+	
+	//TODO hitWall no longer valid.
 	public boolean isGameOver() {
-		if (hitWall == true || ateTail == true){
+		if (hitBlock || ateTail){
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return true;
-			
 		}
 		return false;
 	}
