@@ -1,3 +1,5 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.TimerTask;
 
@@ -11,13 +13,28 @@ public class GameClock extends TimerTask {
 	Score score;
 	DrawSnakeGamePanel gamePanel;
 	Block block;
+	boolean PAUSE;
 		
-	public GameClock(Snake snake, Kibble kibble, Score score, DrawSnakeGamePanel gamePanel,Block block){
+	public GameClock(Snake snake, Kibble kibble, Score score, DrawSnakeGamePanel gamePanel){
 		this.snake = snake;
 		this.kibble = kibble;
 		this.score = score;
 		this.gamePanel = gamePanel;
-		this.block = block;
+		this.PAUSE = false;
+//		this.block = block;
+	}
+	
+
+	public void pause(KeyEvent ev){
+		if (ev.getKeyCode() == KeyEvent.VK_SPACE){
+			if(PAUSE){
+				PAUSE = false;
+				run();
+			}else {
+			PAUSE = true;
+			this.cancel();
+			}
+		}
 	}
 	
 	@Override
@@ -28,8 +45,7 @@ public class GameClock extends TimerTask {
 
 		switch (stage) {
 			case SnakeGame.BEFORE_GAME: {
-				//don't do anything, waiting for user to press a key to start
-				
+				//don't do anything, waiting for user to press Enter to start
 				break;
 			}
 			case SnakeGame.DURING_GAME: {
@@ -48,7 +64,7 @@ public class GameClock extends TimerTask {
 				}
 				if (snake.didEatKibble(kibble) == true) {		
 					//tell kibble to update
-					kibble.moveKibble(snake,block);
+					kibble.moveKibble(snake);
 					Score.increaseScore();
 				}
 				break;

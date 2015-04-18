@@ -22,7 +22,7 @@ public class SnakeGame extends JFrame{
 
 	protected static Score score;
 	
-	protected static Block block = new Block();
+	protected static Block block;
 
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
@@ -65,7 +65,7 @@ public class SnakeGame extends JFrame{
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
 
-		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, block);
+		snakePanel = new DrawSnakeGamePanel(snake, kibble, score);
 		snakePanel.setFocusable(true);
 		snakePanel.requestFocusInWindow(); //required to give this component the focus so it can generate KeyEvents
 
@@ -83,7 +83,7 @@ public class SnakeGame extends JFrame{
 		ySquares = yPixelMaxDimension / squareSize;
 
 		snake = new Snake(xSquares, ySquares, squareSize);
-		kibble = new Kibble(snake,block);
+		kibble = new Kibble(snake);
 		score = new Score();
 
 		gameStage = BEFORE_GAME;
@@ -91,7 +91,7 @@ public class SnakeGame extends JFrame{
 
 	protected static void newGame() {
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel,block);
+		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
 	}
 

@@ -10,6 +10,31 @@ public class GameControls implements KeyListener{
 		this.snake = s;
 	}
 	
+	public void gameSet(KeyEvent ev){
+		if(ev.getKeyCode() == KeyEvent.VK_ENTER){
+			DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
+		
+			if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
+				//Start the game
+				SnakeGame.setGameStage(SnakeGame.DURING_GAME);
+				SnakeGame.newGame();
+				panel.repaint();
+				return;
+			}
+			
+			else if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
+				snake.reset();
+				Score.resetScore();
+				
+				//Need to start the timer and start the game again
+				SnakeGame.newGame();
+				SnakeGame.setGameStage(SnakeGame.DURING_GAME);
+				panel.repaint();
+				return;
+			}
+		}
+	}
+	
 	public void keyPressed(KeyEvent ev) {
 		//keyPressed events are for catching events like function keys, enter, arrow keys
 		//We want to listen for arrow keys to move snake
@@ -21,47 +46,26 @@ public class GameControls implements KeyListener{
 		//Hopefully, a DrawSnakeGamePanel object.
 		//It would be a good idea to catch a ClassCastException here. 
 		
-		DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
-
-		if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
-			//Start the game
-			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
-			SnakeGame.newGame();
-			panel.repaint();
-			return;
-		}
-		
-		if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
-			snake.reset();
-			Score.resetScore();
-			
-			//Need to start the timer and start the game again
-			SnakeGame.newGame();
-			SnakeGame.setGameStage(SnakeGame.DURING_GAME);
-			panel.repaint();
-			return;
-		}
-
+		//added a game start function
+		gameSet(ev);
 		
 		if (ev.getKeyCode() == KeyEvent.VK_DOWN) {
 			//System.out.println("snake down");
 			snake.snakeDown();
 		}
-		if (ev.getKeyCode() == KeyEvent.VK_UP) {
+		else if (ev.getKeyCode() == KeyEvent.VK_UP) {
 			//System.out.println("snake up");
 			snake.snakeUp();
 		}
-		if (ev.getKeyCode() == KeyEvent.VK_LEFT) {
+		else if (ev.getKeyCode() == KeyEvent.VK_LEFT) {
 			//System.out.println("snake left");
 			snake.snakeLeft();
 		}
-		if (ev.getKeyCode() == KeyEvent.VK_RIGHT) {
+		else if (ev.getKeyCode() == KeyEvent.VK_RIGHT) {
 			//System.out.println("snake right");
 			snake.snakeRight();
 		}
-
 	}
-
 
 	@Override
 	public void keyReleased(KeyEvent ev) {
@@ -78,5 +82,7 @@ public class GameControls implements KeyListener{
 			System.exit(0);    //quit if user presses the q key.
 		}
 	}
+	
+	
 
 }

@@ -1,24 +1,6 @@
-
 public class Block {
-	private int[] X = {0,9,0,9};
-	private int[] Y = {0,0,9,9};
-	
-	private int blockSquares[][] = null;
-	
-	public void fillBlockSquares(){
-		for(int x: this.getBlockX()){
-			for(int y: this.getBlockY()){
-				blockSquares[x][y] = 9;
-			}
-		}
-	}
-	
-	public boolean isBlock(int kibbleX, int kibbleY){
-		if(blockSquares[kibbleX][kibbleY] == 9){
-			return false;
-		}
-		return true;
-	}
+	private int[] X = new int[4];
+	private int[] Y = new int[4];
 	
 	public int[] getBlockX(){
 		return this.X;
@@ -29,7 +11,13 @@ public class Block {
 	}
 	
 	public Block(){
-		this.X = X;
-		this.Y = Y;
+		this.X[0] = 0;
+		this.X[1] = 9;
+		this.X[2] = 0;
+		this.X[3] = 9;
+		this.Y[0] = 0;
+		this.Y[1] = 0;
+		this.Y[2] = 9;
+		this.Y[3] = 9;
 	}
 }

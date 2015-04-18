@@ -21,13 +21,16 @@ public class Snake {
 
 	private boolean hitWall = false;
 	private boolean ateTail = false;
-	private boolean hitBlock = false;
+//	private boolean hitBlock = false;
+//	private Block block = new Block();
 
 	private int snakeSquares[][];  //represents all of the squares on the screen
 	//NOT pixels!
 	//A 0 means there is no part of the snake in this square
 	//A non-zero number means part of the snake is in the square
 	//The head of the snake is 1, rest of segments are numbered in order
+//	private int blockSquares[][];
+	
 
 	private int currentHeading;  //Direction snake is going in, not direction user is telling snake to go
 	private int lastHeading;    //Last confirmed movement of snake. See moveSnake method
@@ -50,6 +53,7 @@ public class Snake {
 		snakeSquares = new int[maxX][maxY];
 		fillSnakeSquaresWithZeros();
 		createStartSnake();
+//		fillBlockSquares();
 	}
 
 	protected void createStartSnake(){
@@ -75,11 +79,22 @@ public class Snake {
 	private void fillSnakeSquaresWithZeros() {
 		for (int x = 0; x < this.maxX; x++){
 			for (int y = 0 ; y < this.maxY ; y++) {
-				snakeSquares[x][y] = 0;
+//				if(x == 0 && y == 0 || x == 0 && y == 9 
+//				|| x == 9 && y == 0 || x == 9 && y == 9){
+//				snakeSquares[x][y] = -1;
+//				}else 
+					snakeSquares[x][y] = 0;
 			}
 		}
 	}
 
+//	public void fillBlockSquares(){
+//		for(int x: block.getBlockX()){
+//			for(int y: block.getBlockY()){
+//				blockSquares[x][y] = -1;
+//			}
+//		}
+//	}
 	public LinkedList<Point> segmentsToDraw(){
 		//Return a list of the actual x and y coordinates of the top left of each snake segment
 		//Useful for the Panel class to draw the snake
@@ -133,13 +148,13 @@ public class Snake {
 		if (currentHeading == DIRECTION_DOWN && lastHeading == DIRECTION_UP) {
 			currentHeading = DIRECTION_UP; //keep going the same way
 		}
-		if (currentHeading == DIRECTION_UP && lastHeading == DIRECTION_DOWN) {
+		else if (currentHeading == DIRECTION_UP && lastHeading == DIRECTION_DOWN) {
 			currentHeading = DIRECTION_DOWN; //keep going the same way
 		}
-		if (currentHeading == DIRECTION_LEFT && lastHeading == DIRECTION_RIGHT) {
+		else if (currentHeading == DIRECTION_LEFT && lastHeading == DIRECTION_RIGHT) {
 			currentHeading = DIRECTION_RIGHT; //keep going the same way
 		}
-		if (currentHeading == DIRECTION_RIGHT && lastHeading == DIRECTION_LEFT) {
+		else if (currentHeading == DIRECTION_RIGHT && lastHeading == DIRECTION_LEFT) {
 			currentHeading = DIRECTION_LEFT; //keep going the same way
 		}
 		
@@ -147,10 +162,10 @@ public class Snake {
 		//Or eat your tail? Don't move. 
 
 		//removed hitWall condition.
-		if (hitBlock == true || ateTail == true) {
-			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-			return;
-		}
+//		if (hitBlock == true || ateTail == true) {
+//			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+//			return;
+//		}
 		
 		//Use snakeSquares array, and current heading, to move snake
 
@@ -177,15 +192,15 @@ public class Snake {
 			//Subtract 1 from Y coordinate so head is one square up
 			snakeHeadY-- ;
 		}
-		if (currentHeading == DIRECTION_DOWN) {		
+		else if (currentHeading == DIRECTION_DOWN) {		
 			//Add 1 to Y coordinate so head is 1 square down
 			snakeHeadY++ ;
 		}
-		if (currentHeading == DIRECTION_LEFT) {		
+		else if (currentHeading == DIRECTION_LEFT) {		
 			//Subtract 1 from X coordinate so head is 1 square to the left
 			snakeHeadX -- ;
 		}
-		if (currentHeading == DIRECTION_RIGHT) {		
+		else if (currentHeading == DIRECTION_RIGHT) {		
 			//Add 1 to X coordinate so head is 1 square to the right
 			snakeHeadX ++ ;
 		}
@@ -212,16 +227,15 @@ public class Snake {
 			}else if(snakeHeadY < 0){
 				snakeHeadY = maxY -1;
 			}
-			return;
 		}
 		
 		//Does this make the snake hit a block?
-		if(snakeHeadX == 0 && snakeHeadY == 0 || snakeHeadX == 9 && snakeHeadY == 9
-		|| snakeHeadX == 9 && snakeHeadY == 0 || snakeHeadX == 0 && snakeHeadY == 0){
-			hitBlock = true;
-			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-			return;
-		}
+//		if(snakeHeadX == 0 && snakeHeadY == 0 || snakeHeadX == 9 && snakeHeadY == 9
+//		|| snakeHeadX == 9 && snakeHeadY == 0 || snakeHeadX == 0 && snakeHeadY == 0){
+//			hitBlock = true;
+//			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+//			return;
+//		}
 		
 		//Does this make the snake eat its tail?
 
@@ -229,10 +243,12 @@ public class Snake {
 			ateTail = true;
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
+		} else{
+			//Otherwise, game is still on. Add new head
+			snakeSquares[snakeHeadX][snakeHeadY] = 1; 
 		}
 
-		//Otherwise, game is still on. Add new head
-		snakeSquares[snakeHeadX][snakeHeadY] = 1; 
+
 
 		//If snake did not just eat, then remove tail segment
 		//to keep snake the same length.
@@ -264,9 +280,9 @@ public class Snake {
 		lastHeading = currentHeading; //Update last confirmed heading
 	}
 
-	protected boolean didHitBlock(){
-		return hitBlock;
-	}
+//	protected boolean didHitBlock(){
+//		return hitBlock;
+//	}
 
 	protected boolean didEatTail(){
 		return ateTail;
@@ -279,6 +295,14 @@ public class Snake {
 		return true;
 	}
 
+
+//	public boolean isBlock(int kibbleX, int kibbleY){
+//		if(snakeSquares[kibbleX][kibbleY] == 0){
+//			return false;
+//		}
+//		return true;
+//	}
+	
 	public boolean didEatKibble(Kibble kibble) {
 		//Is this kibble in the snake? It should be in the same square as the snake's head
 		if (kibble.getKibbleX() == snakeHeadX && kibble.getKibbleY() == snakeHeadY){
@@ -314,28 +338,25 @@ public class Snake {
 		}
 		//But if we get here, the snake has filled the screen. win!
 		SnakeGame.setGameStage(SnakeGame.GAME_WON);
-		
 		return true;
 	}
 
 	public void reset() {
-		hitBlock = false;
+//		hitBlock = false;
 		ateTail = false;
 		fillSnakeSquaresWithZeros();
+//		fillBlockSquares();
 		createStartSnake();
-
 	}
 	
 	//TODO hitWall no longer valid.
 	public boolean isGameOver() {
-		if (hitBlock || ateTail){
+		if (ateTail){
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return true;
 		}
 		return false;
 	}
-
-
 }
 
 

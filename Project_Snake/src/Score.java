@@ -38,8 +38,7 @@ public class Score {
 		if (score > highScore) {
 			highScore = score;
 			return true;
-		}
-		return false;
+		}else return false;
 	}
 
 	//These methods are useful for displaying score at the end of the game
@@ -49,18 +48,16 @@ public class Score {
 	}
 
 	public String newHighScore() {
-		
 		if (score > highScore) {
 			highScore = score;
 			return "New High Score!!";
 		} else {
 			return "";
-	}
+		}
 	}
 
 	public String getStringHighScore() {
 		return Integer.toString(highScore);
 	}
-	
 }
 

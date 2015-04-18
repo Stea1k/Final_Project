@@ -15,14 +15,14 @@ public class DrawSnakeGamePanel extends JPanel {
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
-	private Block block = new Block();
+//	private Block block = new Block();
 	
 	//Added Block to Game Panel	
-	DrawSnakeGamePanel(Snake s, Kibble k, Score sc,Block b){
+	DrawSnakeGamePanel(Snake s, Kibble k, Score sc){
 		this.snake = s;
 		this.kibble = k;
 		this.score = sc;
-		this.block = b;
+//		this.block = b;
 	}
 	
 	public Dimension getPreferredSize() {
@@ -42,22 +42,22 @@ public class DrawSnakeGamePanel extends JPanel {
         gameStage = SnakeGame.getGameStage();
         
         switch (gameStage) {
-        case 1: {
-        	displayInstructions(g);
-        	break;
-        } 
-        case 2 : {
-        	displayGame(g);
-        	break;
-        }
-        case 3: {
-        	displayGameOver(g);
-        	break;
-        }
-        case 4: {
-        	displayGameWon(g);
-        	break;
-        }
+        	case 1: {
+        		displayInstructions(g);
+	        	break;
+	        } 
+	        case 2 : {
+	        	displayGame(g);
+	        	break;
+	        }
+	        case 3: {
+	        	displayGameOver(g);
+	        	break;
+	        }
+	        case 4: {
+	        	displayGameWon(g);
+	        	break;
+	        }
         }
         
         
@@ -94,7 +94,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		displayGameGrid(g);
 		displaySnake(g);
 		displayKibble(g);	
-		displayBlock(g);
+//		displayBlock(g);
 	}
 
 	private void displayGameGrid(Graphics g) {
@@ -118,19 +118,19 @@ public class DrawSnakeGamePanel extends JPanel {
 	}
 
 	//generates 4 red squares
-	private void displayBlock(Graphics g){
-		//draw blocks in red
-		g.setColor(Color.RED);
-		int[] x = block.getBlockX();
-		int[] y = block.getBlockY();
-		for(int i: x){
-			for(int n: y){
-				int X = i * SnakeGame.squareSize;
-				int Y = n * SnakeGame.squareSize;
-				g.fillRect(X+1, Y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
-			}
-		}
-	}
+//	private void displayBlock(Graphics g){
+//		//draw blocks in red
+//		g.setColor(Color.RED);
+//		int[] x = block.getBlockX();
+//		int[] y = block.getBlockY();
+//		for(int i: x){
+//			for(int n: y){
+//				int X = i * SnakeGame.squareSize;
+//				int Y = n * SnakeGame.squareSize;
+//				g.fillRect(X+1, Y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
+//			}
+//		}
+//	}
 	private void displayKibble(Graphics g) {
 
 		//Draw the kibble in green
@@ -157,7 +157,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		for (Point p : coordinates) {
 			g.fillRect((int)p.getX(), (int)p.getY(), SnakeGame.squareSize, SnakeGame.squareSize);
 		}
-
 	}
 	
 	//TODO end game pause to avoid clock roll over.
@@ -169,8 +168,6 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayInstructions(Graphics g) {
         g.drawString("Press any key to begin!",100,200);		
         g.drawString("Press q to quit the game",100,300);		
-    	}
-	
-    
+    }
 }
 
