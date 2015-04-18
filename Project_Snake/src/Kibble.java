@@ -26,13 +26,11 @@ public class Kibble {
 	protected void moveKibble(Snake s){
 		Random rng = new Random();
 		boolean kibbleInSnake = true;
-//		boolean kibbleInBlock = true;
 		while (kibbleInSnake == true) {
 			//Generate random kibble location
 			kibbleX = rng.nextInt(SnakeGame.xSquares);
 			kibbleY = rng.nextInt(SnakeGame.ySquares);
 			kibbleInSnake = s.isSnakeSegment(kibbleX, kibbleY);
-//			kibbleInBlock = s.isBlock(kibbleX, kibbleY);
 		}
 	}
 

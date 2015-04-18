@@ -17,9 +17,9 @@ public class Snake {
 	final int DIRECTION_UP = 0;
 	final int DIRECTION_DOWN = 1;
 	final int DIRECTION_LEFT = 2;
-	final int DIRECTION_RIGHT = 3;  //These are completely arbitrary numbers. 
+	final int DIRECTION_RIGHT = 3;  //These are completely arbitrary numbers. Used as indicators
 
-	private boolean hitWall = false;
+//	private boolean hitWall = false; //unused.
 	private boolean ateTail = false;
 //	private boolean hitBlock = false;
 //	private Block block = new Block();
@@ -45,6 +45,7 @@ public class Snake {
 	private int maxX, maxY, squareSize;  
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
+	//sets the squares in which the snake exists.
 	public Snake(int maxX, int maxY, int squareSize){
 		this.maxX = maxX;
 		this.maxY = maxY;
@@ -56,6 +57,7 @@ public class Snake {
 //		fillBlockSquares();
 	}
 
+	//generates the initial snake.
 	protected void createStartSnake(){
 		//snake starts as 3 horizontal squares in the center of the screen, moving left
 		int screenXCenter = (int) maxX/2;  //Cast just in case we have an odd number
@@ -65,17 +67,20 @@ public class Snake {
 		snakeSquares[screenXCenter+1][screenYCenter] = 2;
 		snakeSquares[screenXCenter+2][screenYCenter] = 3;
 
+		//centers the snake.
 		snakeHeadX = screenXCenter;
 		snakeHeadY = screenYCenter;
 
 		snakeSize = 3;
 
+		//snake preset to the left direction.
 		currentHeading = DIRECTION_LEFT;
 		lastHeading = DIRECTION_LEFT;
 		
 		justAteMustGrowThisMuch = 0;
 	}
 
+	//fills the snake squares for differntiation for moving th kibble.
 	private void fillSnakeSquaresWithZeros() {
 		for (int x = 0; x < this.maxX; x++){
 			for (int y = 0 ; y < this.maxY ; y++) {
@@ -88,13 +93,6 @@ public class Snake {
 		}
 	}
 
-//	public void fillBlockSquares(){
-//		for(int x: block.getBlockX()){
-//			for(int y: block.getBlockY()){
-//				blockSquares[x][y] = -1;
-//			}
-//		}
-//	}
 	public LinkedList<Point> segmentsToDraw(){
 		//Return a list of the actual x and y coordinates of the top left of each snake segment
 		//Useful for the Panel class to draw the snake
@@ -139,7 +137,7 @@ public class Snake {
 //		justAteMustGrowThisMuch += growthIncrement;
 //	}
 
-	protected void moveSnake() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+	protected void moveSnake(){
 		//Called every clock tick
 		
 		//Must check that the direction snake is being sent in is not contrary to current heading
@@ -266,43 +264,26 @@ public class Snake {
 		else {
 			//Snake has just eaten. leave tail as is.  Decrease justAte... variable by 1.
 			//Play audio file upon consumption of kibble.
-//			File audioFile = new File("dragon_bit.wav");
-//			 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-//			AudioFormat format = audioStream.getFormat();
-//			DataLine.Info info = new DataLine.Info(Clip.class, format);
-//			Clip audioClip = (Clip) AudioSystem.getLine(info);
-//			audioClip.open(audioStream);
-//			audioClip.loop(0);
 			justAteMustGrowThisMuch -- ;
 			snakeSize ++;
 		}
 		lastHeading = currentHeading; //Update last confirmed heading
 	}
 
-//	protected boolean didHitBlock(){
-//		return hitBlock;
-//	}
-
+	//if the snake ate it's tail.
 	protected boolean didEatTail(){
 		return ateTail;
 	}
 
+	//checks if the square is a snake segment.
 	public boolean isSnakeSegment(int kibbleX, int kibbleY) {
 		if (snakeSquares[kibbleX][kibbleY] == 0) {
 			return false;
 		}
 		return true;
 	}
-
-
-//	public boolean isBlock(int kibbleX, int kibbleY){
-//		if(snakeSquares[kibbleX][kibbleY] == 0){
-//			return false;
-//		}
-//		return true;
-//	}
 	
+	//did the snake eat some kibble?
 	public boolean didEatKibble(Kibble kibble) {
 		//Is this kibble in the snake? It should be in the same square as the snake's head
 		if (kibble.getKibbleX() == snakeHeadX && kibble.getKibbleY() == snakeHeadY){
@@ -312,6 +293,7 @@ public class Snake {
 		return false;
 	}
 
+	//sets the stage in the proper direction.
 	public String toString(){
 		String textsnake = "";
 		//This looks the wrong way around. Actually need to do it this way or snake is drawn flipped 90 degrees. 
@@ -325,31 +307,30 @@ public class Snake {
 	}
 
 	public boolean wonGame() {
-
 		//If all of the squares have snake segments in, the snake has eaten so much kibble 
 		//that it has filled the screen. Win!
-		for (int x = 0 ; x < maxX ; x++) {
-			for (int y = 0 ; y < maxY ; y++){
-				if (snakeSquares[x][y] == 4) {
-					//there is still empty space on the screen, so haven't won
-					return false;
-				}
-			}
-		}
+		if(Score.score == maxX * maxY){
+			SnakeGame.setGameStage(SnakeGame.GAME_WON);
+			return true;
+		}else return false;
+//		for (int x = 0 ; x < maxX ; x++) {
+//			for (int y = 0 ; y < maxY ; y++){
+//				if (snakeSquares[x][y] == 0) {
+//					//there is still empty space on the screen, so haven't won
+//					return false;
+//				}
+//			}
+//		}
 		//But if we get here, the snake has filled the screen. win!
-		SnakeGame.setGameStage(SnakeGame.GAME_WON);
-		return true;
+		
 	}
 
 	public void reset() {
-//		hitBlock = false;
 		ateTail = false;
 		fillSnakeSquaresWithZeros();
-//		fillBlockSquares();
 		createStartSnake();
 	}
 	
-	//TODO hitWall no longer valid.
 	public boolean isGameOver() {
 		if (ateTail){
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);

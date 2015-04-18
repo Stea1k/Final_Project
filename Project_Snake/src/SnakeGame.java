@@ -14,16 +14,46 @@ public class SnakeGame extends JFrame{
 	public static int xSquares ;
 	public static int ySquares ;
 
-	public final static int squareSize = 50;
+	public static int squareSize = 50;
 
 	protected static Snake snake ;
+	
+	protected static boolean hardMode = false;
+	
+	protected boolean gethardMode(){
+		return this.hardMode;
+	}
+	protected static void setHardMode(){
+		if(hardMode == false){
+			hardMode = true;
+		}else hardMode = false;
+	}
 
+//	protected static boolean moreSquares = false;
+//	
+//	protected static void setMoreSquares(){
+//		if(moreSquares == false && lessSquares == false){
+//			moreSquares = true;
+//		}else moreSquares = false;
+//	}
+//	
+//	protected static boolean lessSquares = false;
+//	
+//	protected static void setLessSquares(){
+//		if(lessSquares == false && moreSquares == false){
+//			lessSquares = true;
+//		}else moreSquares = false;
+//	}
+//	
+//	protected static void resetSquares(){
+//		moreSquares = false;
+//		lessSquares = false;
+//	}
+	
 	protected static Kibble kibble;
 
 	protected static Score score;
 	
-	protected static Block block;
-
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
 	static final int GAME_OVER = 3;
@@ -78,19 +108,34 @@ public class SnakeGame extends JFrame{
 	}
 
 	private static void initializeGame() {
+		//code meant to change the square size on the screen. does not work.
+//		if(SnakeGame.moreSquares == true){
+//			SnakeGame.squareSize = 25;
+//		}else if(SnakeGame.lessSquares == true){
+//			SnakeGame.squareSize = 100;
+//		}else SnakeGame.squareSize = 50;
+		
 		//set up score, snake and first kibble
 		xSquares = xPixelMaxDimension / squareSize;
 		ySquares = yPixelMaxDimension / squareSize;
 
+		//set the snake
 		snake = new Snake(xSquares, ySquares, squareSize);
 		kibble = new Kibble(snake);
 		score = new Score();
 
+		//game stage is set to the start menu
 		gameStage = BEFORE_GAME;
 	}
 
+	//generates a new game with the option to include hard mode.
 	protected static void newGame() {
 		Timer timer = new Timer();
+		//sets hard mode clock interval if relevant.
+		if(hardMode == true){
+			SnakeGame.clockInterval = 200;
+		}else SnakeGame.clockInterval = 500;
+		//sets the game clock.
 		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
 	}
@@ -106,17 +151,23 @@ public class SnakeGame extends JFrame{
 		});
 	}
 
+	//returns the stage of the game.
 	public static int getGameStage() {
 		return gameStage;
 	}
 
+	//if the game is over, returns a true value.
 	public static boolean gameEnded() {
 		if (gameStage == GAME_OVER || gameStage == GAME_WON){
 			return true;
-		}
-		return false;
+		//if the game was won, sets the next game to hard mode and returns true.
+		}else if(gameStage == GAME_WON){
+			SnakeGame.hardMode = true;
+			return true;
+		}else return false;
 	}
 
+	//sets the game stage to the stage input.
 	public static void setGameStage(int gameStage) {
 		SnakeGame.gameStage = gameStage;
 	}

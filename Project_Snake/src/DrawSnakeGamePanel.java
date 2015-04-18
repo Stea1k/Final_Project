@@ -59,16 +59,14 @@ public class DrawSnakeGamePanel extends JPanel {
 	        	break;
 	        }
         }
-        
-        
-        
     }
 
 	private void displayGameWon(Graphics g) {
 		// TODO Replace this with something really special!
 		g.clearRect(100,100,350,350);
 		g.drawString("YOU WON SNAKE!!!", 150, 150);
-		
+		//asks if the player wishes to play again. 
+		g.drawString("Press ENTER to play again.", 150, 200);
 	}
 	private void displayGameOver(Graphics g) {
 
@@ -102,10 +100,15 @@ public class DrawSnakeGamePanel extends JPanel {
 		int maxX = SnakeGame.xPixelMaxDimension;
 		int maxY= SnakeGame.yPixelMaxDimension;
 		int squareSize = SnakeGame.squareSize;
-		
-		g.clearRect(0, 0, maxX, maxY);
-
-		g.setColor(Color.WHITE);
+		g.drawRect(0, 0, maxX, maxY);
+		//hard mode changes the color scheme for the background and lines.
+		if(SnakeGame.hardMode == true){
+			setBackground(Color.BLACK);
+			g.setColor(Color.RED);
+		}else {
+			setBackground(Color.WHITE);
+			g.setColor(Color.WHITE);
+		}
 
 		//Draw grid - horizontal lines
 		for (int y=0; y <= maxY ; y+= squareSize){			
@@ -117,20 +120,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		}
 	}
 
-	//generates 4 red squares
-//	private void displayBlock(Graphics g){
-//		//draw blocks in red
-//		g.setColor(Color.RED);
-//		int[] x = block.getBlockX();
-//		int[] y = block.getBlockY();
-//		for(int i: x){
-//			for(int n: y){
-//				int X = i * SnakeGame.squareSize;
-//				int Y = n * SnakeGame.squareSize;
-//				g.fillRect(X+1, Y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
-//			}
-//		}
-//	}
 	private void displayKibble(Graphics g) {
 
 		//Draw the kibble in green
@@ -159,13 +148,8 @@ public class DrawSnakeGamePanel extends JPanel {
 		}
 	}
 	
-	//TODO end game pause to avoid clock roll over.
-//	private void displayGameOver(Graphics g){
-//		if()
-//		g.drawString(""), 100, 200);
-//	}
-
 	private void displayInstructions(Graphics g) {
+		g.drawString("Press BACKSPACE for hard mode", 100, 250);
         g.drawString("Press ENTER key to begin!",100,200);		
         g.drawString("Press q to quit the game",100,300);		
     }

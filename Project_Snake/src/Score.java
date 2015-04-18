@@ -16,14 +16,13 @@ public class Score {
 		//Possible TODO get more points for eating kibbles, the longer the snake gets?
 	}
 	
+	//resets the score for a new game.
 	public static void resetScore() {
 		score = 0;	
 	}
 	
 	public static void increaseScore() {
-		
 		score = score + increment;
-		
 	}
 	
 	public int getScore(){

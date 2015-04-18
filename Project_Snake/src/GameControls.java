@@ -10,10 +10,14 @@ public class GameControls implements KeyListener{
 		this.snake = s;
 	}
 	
+	//sets the game. Requires the player hit the ENTER key in order to begin. Works the same after resetting the game.
 	public void gameSet(KeyEvent ev){
+		//initialize the gameset.
 		if(ev.getKeyCode() == KeyEvent.VK_ENTER){
+			//draw the game panel.
 			DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
 		
+			//set the game stage to BEFORE_GAME.
 			if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
 				//Start the game
 				SnakeGame.setGameStage(SnakeGame.DURING_GAME);
@@ -21,7 +25,7 @@ public class GameControls implements KeyListener{
 				panel.repaint();
 				return;
 			}
-			
+			// if the game has ended.
 			else if (SnakeGame.getGameStage() == SnakeGame.GAME_OVER){
 				snake.reset();
 				Score.resetScore();
@@ -33,6 +37,19 @@ public class GameControls implements KeyListener{
 				return;
 			}
 		}
+		else if(ev.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+			SnakeGame.setHardMode();
+		}	
+		//don't work.
+//		else if(ev.getKeyCode() == KeyEvent.VK_1){
+//			SnakeGame.setMoreSquares();
+//		}
+//		else if(ev.getKeyCode() == KeyEvent.VK_2){
+//			SnakeGame.resetSquares();
+//		}
+//		else if(ev.getKeyCode() == KeyEvent.VK_3){
+//			SnakeGame.setLessSquares();
+//		}
 	}
 	
 	public void keyPressed(KeyEvent ev) {
