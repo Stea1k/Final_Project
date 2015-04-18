@@ -84,7 +84,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.drawString("HIGH SCORE = " + textHighScore, 150, 300);
 		g.drawString(newHighScore, 150, 400);
 		
-		g.drawString("press a key to play again", 150, 350);
+		g.drawString("press ENTER key to play again", 150, 350);
 		g.drawString("Press q to quit the game",150,400);		
     			
 	}
@@ -166,7 +166,7 @@ public class DrawSnakeGamePanel extends JPanel {
 //	}
 
 	private void displayInstructions(Graphics g) {
-        g.drawString("Press any key to begin!",100,200);		
+        g.drawString("Press ENTER key to begin!",100,200);		
         g.drawString("Press q to quit the game",100,300);		
     }
 }
