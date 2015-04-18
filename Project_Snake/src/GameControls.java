@@ -37,10 +37,13 @@ public class GameControls implements KeyListener{
 				return;
 			}
 		}
+		//sets Hard mode with the backspace key.
 		else if(ev.getKeyCode() == KeyEvent.VK_BACK_SPACE){
 			SnakeGame.setHardMode();
 		}	
-		//don't work.
+		
+		//don't work. were intended for use with changing game size.
+		
 //		else if(ev.getKeyCode() == KeyEvent.VK_1){
 //			SnakeGame.setMoreSquares();
 //		}

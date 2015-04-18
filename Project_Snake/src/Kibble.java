@@ -23,6 +23,8 @@ public class Kibble {
 			first--;
 		}else moveKibble(s);
 	}
+	
+	//moves the kibble as long as it is detected within the snake.
 	protected void moveKibble(Snake s){
 		Random rng = new Random();
 		boolean kibbleInSnake = true;

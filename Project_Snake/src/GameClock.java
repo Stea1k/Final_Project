@@ -12,7 +12,7 @@ public class GameClock extends TimerTask {
 	Kibble kibble;
 	Score score;
 	DrawSnakeGamePanel gamePanel;
-	boolean PAUSE;
+//	boolean PAUSE;
 		
 	//the game clock setup.
 	public GameClock(Snake snake, Kibble kibble, Score score, DrawSnakeGamePanel gamePanel){
@@ -20,7 +20,7 @@ public class GameClock extends TimerTask {
 		this.kibble = kibble;
 		this.score = score;
 		this.gamePanel = gamePanel;
-		this.PAUSE = false;
+//		this.PAUSE = false;
 	}
 	
 
