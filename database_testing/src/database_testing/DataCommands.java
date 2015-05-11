@@ -10,15 +10,17 @@ import java.util.ArrayList;
 
 public class DataCommands {
 	private String dbURL = "";
-	private Statement sqlCom = null;
-	private Connection conn = null;
+	protected Statement sqlCom = null;
+	protected Connection conn = null;
 	
 	private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static String protocol = "jdbc:derby:";
 	private static String dbName = "Music";
 	
-	private static String USER = "root";
-	private static String PASS = "p4ssw0rd";
+	//root
+	private static String USER;
+	//p4ssw0rd
+	private static String PASS;
 	
 	private boolean loggedIn = false;
 	
@@ -55,7 +57,11 @@ public class DataCommands {
 			setPass(Pass);
 			Class.forName(driver);
 			conn = DriverManager.getConnection(protocol + dbName + ";create=true", USER, PASS);
+			try{
 			sqlCom = conn.createStatement();
+			}catch(SQLException e){
+				e.printStackTrace(System.err);
+			}
 			System.out.println("connection established");
 		}catch(SQLException e){
 			e.printStackTrace(System.err);
@@ -95,8 +101,8 @@ public class DataCommands {
 			dataFromTable = sqlCom.executeQuery(
 					"SELECT * "
 					+ "FROM USERS "
-					+ "WHERE UserName="+User
-					+ " and UserPass=" +Pass
+					+ "WHERE UserName="+"'"+User+"'"
+					+ " and UserPass="+"'" +Pass+"'"
 					);
 			sqlCom.close();
 		}catch(Exception e){
@@ -118,14 +124,14 @@ public class DataCommands {
 					Name+","+UserName+","+UserPass+","+UserPhone							
 					+ ")");
 			sqlCom.close();
-		}catch(Exception e){
-			e.printStackTrace(System.err);
-		}
-		try{
-			sqlCom = conn.createStatement();
-			sqlCom.executeQuery("Call SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY"
-					+ "(derby.user."+UserName+","+UserPass+")");
-			sqlCom.close();
+			try{
+				sqlCom = conn.createStatement();
+				sqlCom.executeQuery("Call SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY"
+						+ "(derby.user."+UserName+","+UserPass+")");
+				sqlCom.close();
+			}catch(Exception e){
+				e.printStackTrace(System.err);
+			}
 		}catch(Exception e){
 			e.printStackTrace(System.err);
 		}
@@ -137,22 +143,22 @@ public class DataCommands {
 			ResultSet dataFromRecords = null;
 			if(artist && !title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT RecordName,RecordArtist,RecordStartCost "
-						+ "FROM RECORDS WHERE RecordArtist LIKE ("+entry+")");
+						"SELECT title,artist,price "
+						+ "FROM RECORDS WHERE artist LIKE ("+entry+")");
 			}else if(!artist && title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT RecordName,RecordArtist,RecordStartCost "
-						+ "FROM RECORDS WHERE RecordTitle LIKE ("+entry+")");
+						"SELECT title,artist,price "
+						+ "FROM RECORDS WHERE title LIKE ("+entry+")");
 			}else if(artist && title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT RecordName,RecordArtist,RecordStartCost "
-						+ "FROM RECORDS WHERE RecordTitle LIKE ("+entry+")"
-								+ " OR RecordArtist LIKE ("+entry+")");
+						"SELECT title,artist,price "
+						+ "FROM RECORDS WHERE title LIKE ("+entry+")"
+								+ " OR artist LIKE ("+entry+")");
 			}
 			while(dataFromRecords.next()){
-				Music Record = new Music(dataFromRecords.getString("RecordName"),
-										 dataFromRecords.getString("RecordArtist"),
-										 dataFromRecords.getFloat("RecordStartCost"));
+				Music Record = new Music(dataFromRecords.getString("title"),
+										 dataFromRecords.getString("artist"),
+										 dataFromRecords.getFloat("price"));
 				records.add(Record);
 			}
 			dataFromRecords.close();
@@ -162,4 +168,5 @@ public class DataCommands {
 		sqlCom.close();
 		return records;
 	}
+//	public void addMusicRecords()
 }

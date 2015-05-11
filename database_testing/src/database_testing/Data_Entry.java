@@ -66,6 +66,7 @@ public class Data_Entry extends JFrame{
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField textField_6;
 	
 	/**
 	 * Launch the application.
@@ -166,6 +167,13 @@ public class Data_Entry extends JFrame{
 		JMenu mnTools = new JMenu("Tools");
 		menuBar.add(mnTools);
 		
+//		if(!loggedIn){
+//			mnTools.setVisible("false");
+//		}
+		
+		JMenuItem mntmAddMusic = new JMenuItem("Add Music");
+		mnTools.add(mntmAddMusic);
+		
 		JMenuItem mntmSearchMusic = new JMenuItem("Search Music");
 		mnTools.add(mntmSearchMusic);
 		
@@ -211,6 +219,66 @@ public class Data_Entry extends JFrame{
 		gbl_addUserFinish.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_addUserFinish.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		addUserFinish.setLayout(gbl_addUserFinish);
+		
+		JPanel addMusic = new JPanel();
+		contentPane.add(addMusic,"addMusic");
+		GridBagLayout gbl_addMusic = new GridBagLayout();
+		gbl_addMusic.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_addMusic.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_addMusic.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_addMusic.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		addMusic.setLayout(gbl_addMusic);
+		
+		JLabel label = new JLabel("");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 0;
+		gbc_label.gridy = 0;
+		addMusic.add(label, gbc_label);
+		
+		JLabel lblAddMusic = new JLabel("Add Music");
+		GridBagConstraints gbc_lblAddMusic = new GridBagConstraints();
+		gbc_lblAddMusic.insets = new Insets(0, 0, 5, 0);
+		gbc_lblAddMusic.gridx = 4;
+		gbc_lblAddMusic.gridy = 1;
+		addMusic.add(lblAddMusic, gbc_lblAddMusic);
+		
+		JLabel lblBySong = new JLabel("by song");
+		GridBagConstraints gbc_lblBySong = new GridBagConstraints();
+		gbc_lblBySong.insets = new Insets(0, 0, 5, 0);
+		gbc_lblBySong.gridx = 4;
+		gbc_lblBySong.gridy = 2;
+		addMusic.add(lblBySong, gbc_lblBySong);
+		
+		JLabel lblByFile = new JLabel("by file");
+		GridBagConstraints gbc_lblByFile = new GridBagConstraints();
+		gbc_lblByFile.insets = new Insets(0, 0, 5, 0);
+		gbc_lblByFile.gridx = 4;
+		gbc_lblByFile.gridy = 7;
+		addMusic.add(lblByFile, gbc_lblByFile);
+		
+		JLabel lblFileName = new JLabel("File Name");
+		GridBagConstraints gbc_lblFileName = new GridBagConstraints();
+		gbc_lblFileName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFileName.gridx = 2;
+		gbc_lblFileName.gridy = 8;
+		addMusic.add(lblFileName, gbc_lblFileName);
+		
+		textField_6 = new JTextField();
+		textField_6.setText(" ");
+		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
+		gbc_textField_6.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_6.gridx = 4;
+		gbc_textField_6.gridy = 8;
+		addMusic.add(textField_6, gbc_textField_6);
+		textField_6.setColumns(10);
+		
+		JButton btnImportFromFile = new JButton("Import From File");
+		GridBagConstraints gbc_btnImportFromFile = new GridBagConstraints();
+		gbc_btnImportFromFile.gridx = 4;
+		gbc_btnImportFromFile.gridy = 9;
+		addMusic.add(btnImportFromFile, gbc_btnImportFromFile);
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//NEW USER START<---------------------------------------------------------------------->
 		////////////////////////////////////////////////////////////////////////////////////////

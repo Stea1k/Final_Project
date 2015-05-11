@@ -6,7 +6,6 @@ public class Users {
 	private String userPass;
 	private String userPhone;
 	
-	
 	protected String getUserName(){
 		return this.userName;
 	}
