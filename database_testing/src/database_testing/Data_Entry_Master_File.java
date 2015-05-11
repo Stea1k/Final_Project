@@ -83,9 +83,12 @@ public class Data_Entry_Master_File extends JFrame{
 		ResultSet rs = null;
 		ArrayList<Music> timeList = new ArrayList<Music>();
 		
-
-		DataBaseConstructor.assignTables();
-		DataBaseConstructor.createDataTables();
+//		Sets and constructs the database tables
+		//Having odd problems.
+//		DataBaseConstructor.assignTables();
+//		DataBaseConstructor.createDataTables();
+		
+		
 //		Music hellsbells = new Music("Hell's Bells", "ACDC");
 		
 		//checks database connection and table access.
@@ -162,19 +165,19 @@ public class Data_Entry_Master_File extends JFrame{
 		mntmQuit.addActionListener(new ExitListener());
 		mnFile.add(mntmQuit);
 		
-		JMenuItem mntmRefresh = new JMenuItem("Refresh");
-		mntmRefresh.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-				//----------------------------------------------------------------//
-			}
-		});
+//		JMenuItem mntmRefresh = new JMenuItem("Refresh");
+//		mntmRefresh.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				//TODO
+//				//----------------------------------------------------------------//
+//			}
+//		});
 		
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mnFile.add(mntmLogout);
 		
-		mnFile.add(mntmRefresh);
+//		mnFile.add(mntmRefresh);
 		
 		JMenu mnTools = new JMenu("Tools");
 		menuBar.add(mnTools);
@@ -747,19 +750,21 @@ public class Data_Entry_Master_File extends JFrame{
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				try {
-					if(DataCommands.getLoggedIn() && DataCommands.login(txtYourUsername.getText(),
-																		   txtYourPassword.getText())){
+//				try {
+					if(DataCommands.getLoggedIn() 
+//							&& DataCommands.login(txtYourUsername.getText(),
+//												  txtYourPassword.getText())
+					   ){
 						CardLayout cl = (CardLayout)(contentPane.getLayout());
 						cl.show(contentPane,userPanel);
 					}else {
 						loginFail.setText("Your credentials were not recognized.");
 					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					loginFail.setText("We are experiencing technical troules, please come back later.");
-				}
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//					loginFail.setText("We are experiencing technical troules, please come back later.");
+//				}
 			}
 		};
 		ActionListener toLoginPanel = new ActionListener(){
