@@ -3,7 +3,7 @@ package database_testing;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DataBaseMain extends DataCommands{
+public class DataBaseConstructor extends DataCommands{
 	 ///////////////////////////////
 	//TODO create array of strings for each table and loop through them using each as a SQL statement.
 	//need to cut down on redundancy.
@@ -13,6 +13,12 @@ public class DataBaseMain extends DataCommands{
 	protected static String setTableToCreate(String command){
 		return createTable = command;
 	}
+	static ArrayList<String> practiceData = new ArrayList<String>();
+	private static String dataPoint;
+	protected static String setDataPoint(String data){
+		return dataPoint = data;
+	}
+	
 	protected static void assignTables(){
 		setTableToCreate( 
 				"CREATE TABLE USERS ("
@@ -29,7 +35,7 @@ public class DataBaseMain extends DataCommands{
 				+ "("
 				+ "cosignorID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
 				+ "cosignorName varchar(20) NOT NULL,"
-				+ "cosignorPhone varchar(10) NOT NULL"
+				+ "cosignorPhone varchar(20) NOT NULL"
 				+ ")");
 		sqlQueries.add(createTable);
 		setTableToCreate(
@@ -54,7 +60,7 @@ public class DataBaseMain extends DataCommands{
 		sqlQueries.add(createTable);
 	}
 	
-	public void createDataTables(){
+	public static void createDataTables(){
 		try {
 			DataConnect("root","p4ssw0rd");
 		} catch (ClassNotFoundException e) {
@@ -75,5 +81,41 @@ public class DataBaseMain extends DataCommands{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void populate(String name,ArrayList<String> data){
+		try{
+			DataConnect("root","p4ssw0rd");
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		cosignorData();
+		for(String i: practiceData){
+			try{
+				sqlCom = conn.createStatement();
+				Object Table = sqlCom.executeQuery(
+						"INSERT INTO "
+						+ name
+						+" VALUES "
+						+ "("
+						+ i
+						+ ")"
+						);
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void cosignorData(){
+		practiceData = new ArrayList<String>();
+		setDataPoint("Sun Records,012-345-6789");
+		practiceData.add(dataPoint);
+		setDataPoint("Lion Records,987-654-3210");
+		practiceData.add(dataPoint);
+	}
+	
+	public static void MusicData(){
+		
 	}
 }

@@ -45,23 +45,18 @@ import javax.swing.JTextPane;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 
-public class Data_Entry extends JFrame{
+public class Data_Entry_Master_File extends JFrame{
 	
 	final static String loginPanel = "Login";
 	final static String userPanel = " ";
-
-//	private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-//	private static String protocol = "jdbc:derby:";
-//	private static String dbName = "Music";
 	
-//	private static String USER = "root";
-//	private static String PASS = "p4ssw0rd";
-
 	public static JPanel contentPane;
+	
 	private JTextField txtYourUsername;
 	private JTextField txtYourPassword;
-//	private Integer userPrivilege;
+	
 	private boolean loggedIn = false;
+	
 	private JTextField UserName;
 	private JTextField UserPass;
 	private JTextField UserPhone;
@@ -70,6 +65,7 @@ public class Data_Entry extends JFrame{
 	private JTextField importFile;
 	private JTextField cosignorName;
 	private JTextField coPhoneNum;
+	
 	private JTable table;
 	
 	protected void resetUsername(){
@@ -87,6 +83,9 @@ public class Data_Entry extends JFrame{
 		ResultSet rs = null;
 		ArrayList<Music> timeList = new ArrayList<Music>();
 		
+
+		DataBaseConstructor.assignTables();
+		DataBaseConstructor.createDataTables();
 //		Music hellsbells = new Music("Hell's Bells", "ACDC");
 		
 		//checks database connection and table access.
@@ -135,7 +134,7 @@ public class Data_Entry extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Data_Entry frame = new Data_Entry();
+					Data_Entry_Master_File frame = new Data_Entry_Master_File();
 					frame.setVisible(true);
 					frame.pack();
 				} catch (Exception e) {
@@ -148,7 +147,7 @@ public class Data_Entry extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public Data_Entry() {
+	public Data_Entry_Master_File() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -744,12 +743,11 @@ public class Data_Entry extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				try{
 					DataCommands.DataConnect(txtYourUsername.getText(),txtYourPassword.getText());
-					loggedIn = true;
 				}catch (ClassNotFoundException ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				if(loggedIn){
+				if(DataCommands.getLoggedIn()){
 					CardLayout cl = (CardLayout)(contentPane.getLayout());
 					cl.show(contentPane,userPanel);
 				}else {
@@ -764,6 +762,7 @@ public class Data_Entry extends JFrame{
 				cl.show(contentPane,loginPanel);
 				resetUsername();
 				resetPassword();
+				DataCommands.toggleLoggedIn();
 				pack();
 			}
 		};
@@ -815,6 +814,12 @@ public class Data_Entry extends JFrame{
 		mntmClearDatabase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DataCommands.dropAll();
+			}
+		});
+		btnAddCosignor.addActionListener(new ActionListener() {
+			Cosigner newCosigner = new Cosigner(cosignorName.getText(),coPhoneNum.getText());
+			public void actionPerformed(ActionEvent e) {
+				DataCommands.newCosigner(newCosigner);
 			}
 		});
 		btnLogin.addActionListener(toUserPanel);

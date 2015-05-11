@@ -26,7 +26,17 @@ public class DataCommands {
 	//p4ssw0rd
 	private static String PASS;
 	
-	private boolean loggedIn = false;
+	private static boolean loggedIn = false;
+	
+	protected static boolean getLoggedIn(){
+		return loggedIn;
+	}
+	
+	protected static void toggleLoggedIn(){
+		if(loggedIn){
+			loggedIn = false;
+		}else{loggedIn = true;}
+	}
 	
 	//Presets artist and title selections on the music viewer to false.
 	//When the checkbox is selected, the switch will initiate.
@@ -75,6 +85,7 @@ public class DataCommands {
 			try{
 			sqlCom = conn.createStatement();
 			System.out.println("connection established");
+			loggedIn = true;
 			}catch(SQLException e){
 				e.printStackTrace(System.err);
 			}
@@ -135,7 +146,7 @@ public class DataCommands {
 		}
 		return success;
 	}
-	public void newCosigner(Cosigner co){
+	public static void newCosigner(Cosigner co){
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
