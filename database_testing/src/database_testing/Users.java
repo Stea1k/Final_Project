@@ -2,15 +2,20 @@ package database_testing;
 
 public class Users {
 	private String userName;
-	private String userType;
+	private Integer userType;
 	private String userPass;
 	private String userPhone;
+	private String email;
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	//getters
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	
 	protected String getUserName(){
 		return this.userName;
 	}
 	
-	protected String getUserType(){
+	protected Integer getUserType(){
 		return this.userType;
 	}
 	
@@ -22,12 +27,20 @@ public class Users {
 		return this.userPhone;
 	}
 	
+	protected String getUserEmail(){
+		return this.email;
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	//setters
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	
 	protected void setUserName(String UN){
 		this.userName = UN;
 	}
 	
-	protected void setUserType(String UT){
-		this.userType = UT;
+	protected void setUserType(Integer i){
+		this.userType = i;
 	}	
 	
 	protected void setUserPass(String UP){
@@ -37,10 +50,22 @@ public class Users {
 	protected void setUserPhone(String UPh){
 		this.userPhone = UPh;
 	}
+
+	protected void setUserEmail(String UE){
+		if(UE == null){
+			this.email = " ";
+		}else this.email = UE;
+	}
 	
-	public Users(String name, String pass, String phone){
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	//Constructor
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public Users(String name, String pass, String phone, String ue, Integer i){
 		this.setUserName(name);
 		this.setUserPass(pass);
 		this.setUserPhone(phone);
+		this.setUserType(i);
+		this.setUserEmail(ue);
 	}
 }

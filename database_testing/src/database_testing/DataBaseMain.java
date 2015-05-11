@@ -16,17 +16,18 @@ public class DataBaseMain extends DataCommands{
 	protected static void assignTables(){
 		setTableToCreate( 
 				"CREATE TABLE USERS ("
-				+ "userID int not null AUTOINCREMENT primary key, "
+				+ "userID int not null AUTO_INCREMENT primary key, "
 				+ "userName varchar(20) not null, "
 				+ "userAuth int not null DEFAULT '1', "
 				+ "userPass varchar(20) not null, "
-				+ "userPhone varchar(10) not null"
+				+ "userPhone varchar(10) not null,"
+				+ "userEmail varchar(20)"
 				+ ")");
 		sqlQueries.add(createTable);
 		setTableToCreate(
 				"CREATE TABLE COSIGNOR"
 				+ "("
-				+ "cosignorID INT NOT NULL AUTOINCREMENT PRIMARY KEY,"
+				+ "cosignorID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
 				+ "cosignorName varchar(20) NOT NULL,"
 				+ "cosignorPhone varchar(10) NOT NULL"
 				+ ")");
@@ -34,10 +35,10 @@ public class DataBaseMain extends DataCommands{
 		setTableToCreate(
 				"CREATE TABLE RECORDS"
 				+ "("
-				+ "musicID INT NOT NULL AUTOINCREMENT PRIMARY KEY,"
-				+ "title varchar NOT NULL,"
-				+ "artist VARCHAR NOT NULL,"
-				+ "price MONEY NOT NULL,"
+				+ "musicID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+				+ "title varchar(20) NOT NULL,"
+				+ "artist VARCHAR(20) NOT NULL,"
+				+ "price float NOT NULL,"
 				+ "dateAdded DATE,"
 				+ "cosignorID INT REFERENCES COSIGNOR(cosignorID)"
 				+ ")");
@@ -45,7 +46,7 @@ public class DataBaseMain extends DataCommands{
 		setTableToCreate(
 				"CREATE TABLE SALES"
 				+ "("
-				+ "salesID INT NOT NULL AUTOINCREMENT PRIMARY KEY,"
+				+ "salesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
 				+ "date DATE,"
 				+ "musicID INT REFERENCES MUSIC(musicID),"
 				+ "userID INT REFERENCES USERS(userID)"

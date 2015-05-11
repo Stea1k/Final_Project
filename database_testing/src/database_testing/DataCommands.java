@@ -115,19 +115,23 @@ public class DataCommands {
 		return found;
 	}
 
-	public void newLogin(String Name, String UserName, String UserPass, String UserPhone){
+	public void newLogin(Users user){
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
-					"INSERT INTO USERS VALUES"+
-					"("+
-					Name+","+UserName+","+UserPass+","+UserPhone							
-					+ ")");
+					"INSERT INTO USERS VALUES"
+					+"("
+					+user.getUserName()+","
+					+user.getUserType()+","
+					+user.getUserPass()+","
+					+user.getUserPhone()+","
+					+user.getUserEmail()							
+					+")");
 			sqlCom.close();
 			try{
 				sqlCom = conn.createStatement();
 				sqlCom.executeQuery("Call SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY"
-						+ "(derby.user."+UserName+","+UserPass+")");
+						+ "(derby.user."+user.getUserName()+","+user.getUserPass()+")");
 				sqlCom.close();
 			}catch(Exception e){
 				e.printStackTrace(System.err);
@@ -136,6 +140,7 @@ public class DataCommands {
 			e.printStackTrace(System.err);
 		}
 	}
+//	public void addMusicRecords()
 	public ArrayList<Music> searchRecords(String entry) throws SQLException{
 		ArrayList<Music> records = new ArrayList<Music>();
 		try{
@@ -168,5 +173,4 @@ public class DataCommands {
 		sqlCom.close();
 		return records;
 	}
-//	public void addMusicRecords()
 }

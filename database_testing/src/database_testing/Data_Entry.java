@@ -38,7 +38,9 @@ import javax.swing.JToolBar;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.awt.CardLayout;
+
 import javax.swing.JTextPane;
 import javax.swing.JCheckBox;
 
@@ -53,21 +55,28 @@ public class Data_Entry extends JFrame{
 	
 	private static String USER = "root";
 	private static String PASS = "p4ssw0rd";
-	
-	private JPanel contentPane;
+
+	public static JPanel contentPane;
 	private JTable table;
 	private JTextField txtYourUsername;
 	private JTextField txtYourPassword;
 	private Integer userPrivilege;
 	private boolean loggedIn = false;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField UserName;
+	private JTextField UserPass;
+	private JTextField UserPhone;
+	private JTextField Email;
 	private JTextField textField_5;
-	private JTextField textField_6;
+	private JTextField importFile;
+	private JTextField cosignorName;
+	private JTextField coPhoneNum;
 	
+	protected void resetUsername(){
+		txtYourUsername.setText(" ");
+	}
+	protected void resetPassword(){
+		txtYourPassword.setText(" ");
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -162,6 +171,9 @@ public class Data_Entry extends JFrame{
 			}
 		});
 		
+		JMenuItem mntmLogout = new JMenuItem("Logout");
+		mnFile.add(mntmLogout);
+		
 		mnFile.add(mntmRefresh);
 		
 		JMenu mnTools = new JMenu("Tools");
@@ -174,11 +186,11 @@ public class Data_Entry extends JFrame{
 		JMenuItem mntmAddMusic = new JMenuItem("Add Music");
 		mnTools.add(mntmAddMusic);
 		
+		JMenuItem mntmAddCosigner = new JMenuItem("Add Cosigner");
+		mnTools.add(mntmAddCosigner);
+		
 		JMenuItem mntmSearchMusic = new JMenuItem("Search Music");
 		mnTools.add(mntmSearchMusic);
-		
-		JMenuItem mntmSearch = new JMenuItem("Search ");
-		mnTools.add(mntmSearch);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -223,62 +235,146 @@ public class Data_Entry extends JFrame{
 		JPanel addMusic = new JPanel();
 		contentPane.add(addMusic,"addMusic");
 		GridBagLayout gbl_addMusic = new GridBagLayout();
-		gbl_addMusic.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_addMusic.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_addMusic.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_addMusic.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_addMusic.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_addMusic.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_addMusic.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_addMusic.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		addMusic.setLayout(gbl_addMusic);
 		
-		JLabel label = new JLabel("");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 0;
-		addMusic.add(label, gbc_label);
+		JPanel addCosignor = new JPanel();
+		contentPane.add(addCosignor,"addcosignor");
+		GridBagLayout gbl_addCosignor = new GridBagLayout();
+		gbl_addCosignor.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_addCosignor.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_addCosignor.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_addCosignor.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		addCosignor.setLayout(gbl_addCosignor);
 		
-		JLabel lblAddMusic = new JLabel("Add Music");
-		GridBagConstraints gbc_lblAddMusic = new GridBagConstraints();
-		gbc_lblAddMusic.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAddMusic.gridx = 4;
-		gbc_lblAddMusic.gridy = 1;
-		addMusic.add(lblAddMusic, gbc_lblAddMusic);
+	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//Add Cosigner Start<------------------------------------------------------------------>
+		////////////////////////////////////////////////////////////////////////////////////////
 		
-		JLabel lblBySong = new JLabel("by song");
-		GridBagConstraints gbc_lblBySong = new GridBagConstraints();
-		gbc_lblBySong.insets = new Insets(0, 0, 5, 0);
-		gbc_lblBySong.gridx = 4;
-		gbc_lblBySong.gridy = 2;
-		addMusic.add(lblBySong, gbc_lblBySong);
+		JLabel lblAddCosigner = new JLabel("Add Cosigner");
+		GridBagConstraints gbc_lblAddCosigner = new GridBagConstraints();
+		gbc_lblAddCosigner.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddCosigner.gridx = 1;
+		gbc_lblAddCosigner.gridy = 0;
+		addCosignor.add(lblAddCosigner, gbc_lblAddCosigner);
 		
-		JLabel lblByFile = new JLabel("by file");
-		GridBagConstraints gbc_lblByFile = new GridBagConstraints();
-		gbc_lblByFile.insets = new Insets(0, 0, 5, 0);
-		gbc_lblByFile.gridx = 4;
-		gbc_lblByFile.gridy = 7;
-		addMusic.add(lblByFile, gbc_lblByFile);
+		JLabel lblCosignerName = new JLabel("Cosigner Name");
+		GridBagConstraints gbc_lblCosignerName = new GridBagConstraints();
+		gbc_lblCosignerName.anchor = GridBagConstraints.WEST;
+		gbc_lblCosignerName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosignerName.gridx = 1;
+		gbc_lblCosignerName.gridy = 2;
+		addCosignor.add(lblCosignerName, gbc_lblCosignerName);
 		
-		JLabel lblFileName = new JLabel("File Name");
-		GridBagConstraints gbc_lblFileName = new GridBagConstraints();
-		gbc_lblFileName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblFileName.gridx = 2;
-		gbc_lblFileName.gridy = 8;
-		addMusic.add(lblFileName, gbc_lblFileName);
+		cosignorName = new JTextField();
+		cosignorName.setText(" ");
+		GridBagConstraints gbc_cosignorName = new GridBagConstraints();
+		gbc_cosignorName.insets = new Insets(0, 0, 5, 5);
+		gbc_cosignorName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cosignorName.gridx = 2;
+		gbc_cosignorName.gridy = 2;
+		addCosignor.add(cosignorName, gbc_cosignorName);
+		cosignorName.setColumns(10);
 		
-		textField_6 = new JTextField();
-		textField_6.setText(" ");
-		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-		gbc_textField_6.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_6.gridx = 4;
-		gbc_textField_6.gridy = 8;
-		addMusic.add(textField_6, gbc_textField_6);
-		textField_6.setColumns(10);
+		JLabel lblCosignerPhoneNumber = new JLabel("Cosigner Phone Number");
+		GridBagConstraints gbc_lblCosignerPhoneNumber = new GridBagConstraints();
+		gbc_lblCosignerPhoneNumber.anchor = GridBagConstraints.EAST;
+		gbc_lblCosignerPhoneNumber.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosignerPhoneNumber.gridx = 1;
+		gbc_lblCosignerPhoneNumber.gridy = 3;
+		addCosignor.add(lblCosignerPhoneNumber, gbc_lblCosignerPhoneNumber);
 		
-		JButton btnImportFromFile = new JButton("Import From File");
-		GridBagConstraints gbc_btnImportFromFile = new GridBagConstraints();
-		gbc_btnImportFromFile.gridx = 4;
-		gbc_btnImportFromFile.gridy = 9;
-		addMusic.add(btnImportFromFile, gbc_btnImportFromFile);
+		coPhoneNum = new JTextField();
+		coPhoneNum.setText(" ");
+		GridBagConstraints gbc_coPhoneNum = new GridBagConstraints();
+		gbc_coPhoneNum.insets = new Insets(0, 0, 5, 5);
+		gbc_coPhoneNum.fill = GridBagConstraints.HORIZONTAL;
+		gbc_coPhoneNum.gridx = 2;
+		gbc_coPhoneNum.gridy = 3;
+		addCosignor.add(coPhoneNum, gbc_coPhoneNum);
+		coPhoneNum.setColumns(10);
+		
+		JButton btnAddCosignor = new JButton("Add Cosignor");
+		GridBagConstraints gbc_btnAddCosignor = new GridBagConstraints();
+		gbc_btnAddCosignor.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAddCosignor.gridx = 1;
+		gbc_btnAddCosignor.gridy = 4;
+		addCosignor.add(btnAddCosignor, gbc_btnAddCosignor);
+		
+		JButton btnReturnToSearch = new JButton("Return to Search");
+		GridBagConstraints gbc_btnReturnToSearch = new GridBagConstraints();
+		gbc_btnReturnToSearch.insets = new Insets(0, 0, 0, 5);
+		gbc_btnReturnToSearch.gridx = 2;
+		gbc_btnReturnToSearch.gridy = 4;
+		addCosignor.add(btnReturnToSearch, gbc_btnReturnToSearch);
+		
+	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//Add Cosigner End<-------------------------------------------------------------------->
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//Add Music Start<--------------------------------------------------------------------->
+		////////////////////////////////////////////////////////////////////////////////////////
+			
+		JLabel lblCosigner = new JLabel("Cosigner");
+		GridBagConstraints gbc_lblCosigner = new GridBagConstraints();
+		gbc_lblCosigner.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosigner.gridx = 0;
+		gbc_lblCosigner.gridy = 0;
+		addMusic.add(lblCosigner, gbc_lblCosigner);
+		
+		JLabel lblAddMusicFrom = new JLabel("Add Music From File");
+		GridBagConstraints gbc_lblAddMusicFrom = new GridBagConstraints();
+		gbc_lblAddMusicFrom.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddMusicFrom.gridx = 1;
+		gbc_lblAddMusicFrom.gridy = 0;
+		addMusic.add(lblAddMusicFrom, gbc_lblAddMusicFrom);
+		
+		JButton btnBackToLogin = new JButton("Return to search");
+		GridBagConstraints gbc_btnBackToLogin = new GridBagConstraints();
+		gbc_btnBackToLogin.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBackToLogin.gridx = 2;
+		gbc_btnBackToLogin.gridy = 0;
+		addMusic.add(btnBackToLogin, gbc_btnBackToLogin);
+		
+		JLabel successfailure = new JLabel(" ");
+		GridBagConstraints gbc_successfailure = new GridBagConstraints();
+		gbc_successfailure.insets = new Insets(0, 0, 5, 5);
+		gbc_successfailure.gridx = 1;
+		gbc_successfailure.gridy = 1;
+		addMusic.add(successfailure, gbc_successfailure);
+		
+		JLabel lblFileSpecified = new JLabel("File Specified:");
+		GridBagConstraints gbc_lblFileSpecified = new GridBagConstraints();
+		gbc_lblFileSpecified.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFileSpecified.anchor = GridBagConstraints.EAST;
+		gbc_lblFileSpecified.gridx = 0;
+		gbc_lblFileSpecified.gridy = 2;
+		addMusic.add(lblFileSpecified, gbc_lblFileSpecified);
+		
+		importFile = new JTextField();
+		importFile.setText(" ");
+		GridBagConstraints gbc_importFile = new GridBagConstraints();
+		gbc_importFile.insets = new Insets(0, 0, 5, 5);
+		gbc_importFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_importFile.gridx = 1;
+		gbc_importFile.gridy = 2;
+		addMusic.add(importFile, gbc_importFile);
+		importFile.setColumns(10);
+		
+		JButton btnImportFileData = new JButton("Import File Data");
+		GridBagConstraints gbc_btnImportFileData = new GridBagConstraints();
+		gbc_btnImportFileData.insets = new Insets(0, 0, 5, 0);
+		gbc_btnImportFileData.gridx = 2;
+		gbc_btnImportFileData.gridy = 2;
+		addMusic.add(btnImportFileData, gbc_btnImportFileData);
+	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		//Add Music End<---------------------------------------------------------------------->
+		////////////////////////////////////////////////////////////////////////////////////////
+		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//NEW USER START<---------------------------------------------------------------------->
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -296,22 +392,12 @@ public class Data_Entry extends JFrame{
 		gbl_newUserPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		newUserPanel.setLayout(gbl_newUserPanel);
 		
-		JLabel newName = new JLabel("Name:");
-		GridBagConstraints gbc_newName = new GridBagConstraints();
-		gbc_newName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_newName.insets = new Insets(0, 0, 5, 5);
-		gbc_newName.gridx = 0;
-		gbc_newName.gridy = 0;
-		newUserPanel.add(newName, gbc_newName);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		newUserPanel.add(textField, gbc_textField);
+		JLabel lblEnterYourInformation = new JLabel("Enter Your Information Below");
+		GridBagConstraints gbc_lblEnterYourInformation = new GridBagConstraints();
+		gbc_lblEnterYourInformation.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEnterYourInformation.gridx = 1;
+		gbc_lblEnterYourInformation.gridy = 0;
+		newUserPanel.add(lblEnterYourInformation, gbc_lblEnterYourInformation);
 		
 		JLabel newUserName = new JLabel("User Name:");
 		GridBagConstraints gbc_newUserName = new GridBagConstraints();
@@ -321,14 +407,14 @@ public class Data_Entry extends JFrame{
 		gbc_newUserName.gridy = 1;
 		newUserPanel.add(newUserName, gbc_newUserName);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		newUserPanel.add(textField_1, gbc_textField_1);
+		UserName = new JTextField();
+		UserName.setColumns(10);
+		GridBagConstraints gbc_UserName = new GridBagConstraints();
+		gbc_UserName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_UserName.insets = new Insets(0, 0, 5, 0);
+		gbc_UserName.gridx = 1;
+		gbc_UserName.gridy = 1;
+		newUserPanel.add(UserName, gbc_UserName);
 		
 		JLabel newPassword = new JLabel("Password:");
 		GridBagConstraints gbc_newPassword = new GridBagConstraints();
@@ -338,14 +424,14 @@ public class Data_Entry extends JFrame{
 		gbc_newPassword.gridy = 2;
 		newUserPanel.add(newPassword, gbc_newPassword);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 2;
-		newUserPanel.add(textField_2, gbc_textField_2);
+		UserPass = new JTextField();
+		UserPass.setColumns(10);
+		GridBagConstraints gbc_UserPass = new GridBagConstraints();
+		gbc_UserPass.fill = GridBagConstraints.HORIZONTAL;
+		gbc_UserPass.insets = new Insets(0, 0, 5, 0);
+		gbc_UserPass.gridx = 1;
+		gbc_UserPass.gridy = 2;
+		newUserPanel.add(UserPass, gbc_UserPass);
 		
 		JLabel newPhoneNumber = new JLabel("Phone Number:");
 		GridBagConstraints gbc_newPhoneNumber = new GridBagConstraints();
@@ -355,14 +441,14 @@ public class Data_Entry extends JFrame{
 		gbc_newPhoneNumber.gridy = 3;
 		newUserPanel.add(newPhoneNumber, gbc_newPhoneNumber);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 3;
-		newUserPanel.add(textField_3, gbc_textField_3);
+		UserPhone = new JTextField();
+		UserPhone.setColumns(10);
+		GridBagConstraints gbc_UserPhone = new GridBagConstraints();
+		gbc_UserPhone.fill = GridBagConstraints.HORIZONTAL;
+		gbc_UserPhone.insets = new Insets(0, 0, 5, 0);
+		gbc_UserPhone.gridx = 1;
+		gbc_UserPhone.gridy = 3;
+		newUserPanel.add(UserPhone, gbc_UserPhone);
 		
 		JLabel newEmail = new JLabel("Email:");
 		GridBagConstraints gbc_newEmail = new GridBagConstraints();
@@ -372,14 +458,14 @@ public class Data_Entry extends JFrame{
 		gbc_newEmail.gridy = 4;
 		newUserPanel.add(newEmail, gbc_newEmail);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_4.gridx = 1;
-		gbc_textField_4.gridy = 4;
-		newUserPanel.add(textField_4, gbc_textField_4);
+		Email = new JTextField();
+		Email.setColumns(10);
+		GridBagConstraints gbc_Email = new GridBagConstraints();
+		gbc_Email.fill = GridBagConstraints.HORIZONTAL;
+		gbc_Email.insets = new Insets(0, 0, 5, 0);
+		gbc_Email.gridx = 1;
+		gbc_Email.gridy = 4;
+		newUserPanel.add(Email, gbc_Email);
 		
 		JButton newUserCancel = new JButton("Cancel");
 		GridBagConstraints gbc_newUserCancel = new GridBagConstraints();
@@ -470,10 +556,12 @@ public class Data_Entry extends JFrame{
 		login_panel.add(btnNewUser, gbc_btnNewUser);
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//TOP PANEL END <------------------------------------------------------------------>
-
+		////////////////////////////////////////////////////////////////////////////////////////
+		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//LOGGED IN PANEL <---------------------------------------------------------------->
-		
+		////////////////////////////////////////////////////////////////////////////////////////
+
 		JPanel logged_in = new JPanel();
 		GridBagConstraints gbc_logged_in = new GridBagConstraints();
 		gbc_logged_in.fill = GridBagConstraints.BOTH;
@@ -620,52 +708,62 @@ public class Data_Entry extends JFrame{
 		//action handlers<---------------------------------------------------------------->
 		
 		//Login button actions for visibility settings.
-		btnLogin.addActionListener(new ActionListener(){
+
+		ActionListener toUserPanel = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				CardLayout cl = (CardLayout)(contentPane.getLayout());
 				cl.show(contentPane,userPanel);
 			}
-		});
-		
-		btnLogout.addActionListener(new ActionListener(){
+		};
+		ActionListener toLoginPanel = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				CardLayout cl = (CardLayout)(contentPane.getLayout());
 				cl.show(contentPane,loginPanel);
+				resetUsername();
+				resetPassword();
 				pack();
 			}
-		});	
-		btnNewUser.addActionListener(new ActionListener(){
+		};
+		ActionListener toNewUser = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				CardLayout cl = (CardLayout)(contentPane.getLayout());
 				cl.show(contentPane,"new User");
 				pack();
 			}
-		});
-		newUserCancel.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane,loginPanel);
-				pack();
-			}
-		});
-		newUserAdd.addActionListener(new ActionListener(){
+		};
+		ActionListener runCheck = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				CardLayout cl = (CardLayout)(contentPane.getLayout());
 				cl.show(contentPane,"addUserFinish");
 				pack();
 			}
-		});
-		returnToLogin.addActionListener(new ActionListener(){
+		};
+		ActionListener addMusicPanel = new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane,loginPanel);
-				pack();
+				cl.show(contentPane,"addMusic");
 			}
-		});
+		};
+		ActionListener addCosignorPanel = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+				cl.show(contentPane,"addCosignor");
+			}
+		};
+		
+		btnLogin.addActionListener(toUserPanel);
+		mntmSearchMusic.addActionListener(toUserPanel);
+		btnLogout.addActionListener(toLoginPanel);
+		newUserCancel.addActionListener(toLoginPanel);
+		returnToLogin.addActionListener(toLoginPanel);
+		mntmLogout.addActionListener(toLoginPanel);
+		btnNewUser.addActionListener(toNewUser);
+		newUserAdd.addActionListener(runCheck);
+		mntmAddMusic.addActionListener(addMusicPanel);
+		mntmAddCosigner.addActionListener(addCosignorPanel);
 	}
 }
