@@ -1,5 +1,6 @@
 package database_testing;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,11 +8,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 public class DataCommands {
 	private String dbURL = "";
-	protected Statement sqlCom = null;
-	protected Connection conn = null;
+	protected static Statement sqlCom = null;
+	protected static Connection conn = null;
 	
 	private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static String protocol = "jdbc:derby:";
@@ -27,8 +31,8 @@ public class DataCommands {
 	//Presets artist and title selections on the music viewer to false.
 	//When the checkbox is selected, the switch will initiate.
 	
-	protected boolean artist = false;
-	protected boolean title = false;
+	protected static boolean artist = false;
+	protected static boolean title = false;
 	
 	protected void switchArtist(){
 		if(artist){
@@ -44,14 +48,25 @@ public class DataCommands {
 			title = true;
 		}
 	}
-	protected void setUser(String User){
-		this.USER = User;
+	protected static void setUser(String User){
+		USER = User;
 	}
-	protected void setPass(String Pass){
-		this.PASS = Pass;
+	protected static void setPass(String Pass){
+		PASS = Pass;
+	}
+	public static void dropAll(){
+		try{
+			sqlCom = conn.createStatement();
+			Object drop = sqlCom.executeQuery(
+					"DROP DATABASE MUSIC"
+					);
+			sqlCom.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 	//Sets up connection to derby database with USER and PASS
-	public void DataConnect(String User, String Pass) throws ClassNotFoundException{
+	public static void DataConnect(String User, String Pass) throws ClassNotFoundException{
 		try{
 			setUser(User);
 			setPass(Pass);
@@ -59,37 +74,14 @@ public class DataCommands {
 			conn = DriverManager.getConnection(protocol + dbName + ";create=true", USER, PASS);
 			try{
 			sqlCom = conn.createStatement();
+			System.out.println("connection established");
 			}catch(SQLException e){
 				e.printStackTrace(System.err);
 			}
-			System.out.println("connection established");
 		}catch(SQLException e){
 			e.printStackTrace(System.err);
 		}
-	}
-//	public ResultSet getDataFromTable(String Table){
-//		ResultSet dataFromTable = null;
-//		try{
-//			sqlCom = conn.createStatement();
-//			dataFromTable = sqlCom.executeQuery("SELECT * FROM" + Table);
-//		}catch(Exception e){
-//			e.printStackTrace(System.err);
-//		}
-//		return dataFromTable;
-//	}
-//	public ArrayList<> getFromMultiple(String Table1, String Table2, String SharedCol){
-//		ResultSet dataFromTable = null;
-//		try{
-//			sqlCom = conn.createStatement();
-//			dataFromTable = sqlCom.executeQuery(
-//					"SELECT * FROM " +Table1+" join "+Table2+
-//					" on "+ Table1+"."+SharedCol+ "="+ Table2+"."+SharedCol);
-//		}catch(Exception e){
-//			e.printStackTrace(System.err);
-//		}
-//		return dataFromTable;
-//	}
-	
+	}	
 	//Login command for logging into software as a given user.
 	//TODO How does this differ from getting a connection?
 	
@@ -115,7 +107,8 @@ public class DataCommands {
 		return found;
 	}
 
-	public void newLogin(Users user){
+	public static boolean newLogin(Users user){
+		boolean success = false;
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
@@ -133,16 +126,45 @@ public class DataCommands {
 				sqlCom.executeQuery("Call SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY"
 						+ "(derby.user."+user.getUserName()+","+user.getUserPass()+")");
 				sqlCom.close();
+				success = true;
 			}catch(Exception e){
 				e.printStackTrace(System.err);
 			}
 		}catch(Exception e){
 			e.printStackTrace(System.err);
 		}
+		return success;
+	}
+	public void newCosigner(Cosigner co){
+		try{
+			sqlCom = conn.createStatement();
+			sqlCom.executeQuery(
+					"INSERT INTO COSIGNOR VALUES"
+					+ "("
+					+ co.getName()+","
+					+ co.getPhone()+","
+					+ ")"
+					);
+			sqlCom.close();
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+		}
 	}
 //	public void addMusicRecords()
-	public ArrayList<Music> searchRecords(String entry) throws SQLException{
-		ArrayList<Music> records = new ArrayList<Music>();
+	public void addMusicRecords(File file){
+		try{
+			sqlCom = conn.createStatement();
+			sqlCom.executeQuery(
+					"LOAD DATA INFILE "
+					+file
+					+" INTO TABLE RECORDS"
+					);
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+		}
+	}
+	public static DefaultTableModel searchRecords(String entry) throws SQLException{
+		DefaultTableModel def = new DefaultTableModel();
 		try{
 			sqlCom = conn.createStatement();
 			ResultSet dataFromRecords = null;
@@ -160,17 +182,32 @@ public class DataCommands {
 						+ "FROM RECORDS WHERE title LIKE ("+entry+")"
 								+ " OR artist LIKE ("+entry+")");
 			}
-			while(dataFromRecords.next()){
-				Music Record = new Music(dataFromRecords.getString("title"),
-										 dataFromRecords.getString("artist"),
-										 dataFromRecords.getFloat("price"));
-				records.add(Record);
-			}
+			//Ideas for this came from Paul Vargas (Simplest Code to populate JTable from result set, Stackoverflow)
+			ResultSetMetaData rsmd = dataFromRecords.getMetaData();
+			
+			//table metadata constructing the table.
+			Vector<String> columnNames = new Vector<String>();
+		    int columnCount = rsmd.getColumnCount();
+		    for (int column = 1; column <= columnCount; column++) {
+		        columnNames.add(rsmd.getColumnName(column));
+		    }
+		    //data populating the table
+		    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		    while (dataFromRecords.next()) {
+		        Vector<Object> vector = new Vector<Object>();
+		        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+		            vector.add(dataFromRecords.getObject(columnIndex));
+		        }
+		        data.add(vector);
+		    }
+		    //end of Paul Vargas
+			/////////////////////////////////////////////////////////////////////
+		    def = new DefaultTableModel(data, columnNames);
 			dataFromRecords.close();
 		}catch(Exception e){
 			e.printStackTrace(System.err);
 		}
 		sqlCom.close();
-		return records;
+		return def;
 	}
 }

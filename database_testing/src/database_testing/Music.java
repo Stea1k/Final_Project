@@ -9,7 +9,6 @@ public class Music {
 	private String title;
 	private String artist;
 	private Float price;
-	private int sold;
 	
 	protected void setTitle(String T){
 		this.title = T;
@@ -21,10 +20,6 @@ public class Music {
 	
 	protected void setPrice(Float P){
 		this.price = P;
-	}
-	
-	protected void setNumberSold(int I){
-		this.sold = I;
 	}
 	
 	protected String getTitle(){
@@ -39,14 +34,9 @@ public class Music {
 		return this.price;
 	}
 	
-	protected Integer getNumberSold(){
-		return this.sold;
-	}
-	
 	public Music(String t,String a, Float p){
 		setTitle(t);
 		setArtist(a);
 		setPrice(p);
-		setNumberSold(0);
 	}
 }

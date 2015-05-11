@@ -39,7 +39,7 @@ public class DataBaseMain extends DataCommands{
 				+ "title varchar(20) NOT NULL,"
 				+ "artist VARCHAR(20) NOT NULL,"
 				+ "price float NOT NULL,"
-				+ "dateAdded DATE,"
+				+ "dateAdded TIMESTAMP,"
 				+ "cosignorID INT REFERENCES COSIGNOR(cosignorID)"
 				+ ")");
 		sqlQueries.add(createTable);

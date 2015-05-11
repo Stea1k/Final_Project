@@ -61,11 +61,10 @@ public class Users {
 	//Constructor
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public Users(String name, String pass, String phone, String ue, Integer i){
+	public Users(String name, String pass, String phone, String ue){
 		this.setUserName(name);
 		this.setUserPass(pass);
 		this.setUserPhone(phone);
-		this.setUserType(i);
 		this.setUserEmail(ue);
 	}
 }
