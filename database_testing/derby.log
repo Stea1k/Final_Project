@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Mon May 11 13:24:40 CDT 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014d-4438-c097-0000030c5ac0 
+Mon May 11 14:49:59 CDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014d-4486-e045-0000030c5bc8 
 on database directory /home/nick_toffle/git/git_test/database_testing/Music with class loader sun.misc.Launcher$AppClassLoader@c387f44 
 Loaded from file:/opt/Apache/db-derby-10.11.1.1-bin/lib/derby.jar
 java.vendor=Oracle Corporation
