@@ -76,18 +76,18 @@ public class DataCommands {
 	protected static void setPass(String Pass){
 		PASS = Pass;
 	}
-	public static void dropAll(){
-		try{
-			sqlCom = conn.createStatement();
-			Object drop = sqlCom.executeUpdate(
-					"drop database MUSIC"
-					);
-			sqlCom.close();
-			System.out.println("Database successfully deleted");
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
+//	public static void dropAll(){
+//		try{
+//			sqlCom = conn.createStatement();
+//			Object drop = sqlCom.executeUpdate(
+//					"drop database MUSIC"
+//					);
+//			sqlCom.close();
+//			System.out.println("Database successfully deleted");
+//		}catch(SQLException e){
+//			e.printStackTrace();
+//		}
+//	}
 	//Sets up connection to derby database with USER and PASS
 	public static void DataConnect(String User, String Pass) throws ClassNotFoundException{
 		try{

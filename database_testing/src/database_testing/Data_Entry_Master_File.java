@@ -44,6 +44,8 @@ import java.awt.CardLayout;
 import javax.swing.JTextPane;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 
 public class Data_Entry_Master_File extends JFrame{
 	
@@ -82,12 +84,6 @@ public class Data_Entry_Master_File extends JFrame{
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Music> timeList = new ArrayList<Music>();
-		
-//		Sets and constructs the database tables
-		//Having odd problems.
-		DataBaseConstructor.assignTables();
-		DataBaseConstructor.createDataTables();
-		
 		
 //		Music hellsbells = new Music("Hell's Bells", "ACDC");
 		
@@ -152,7 +148,7 @@ public class Data_Entry_Master_File extends JFrame{
 	 */
 	public Data_Entry_Master_File() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 613, 517);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -177,8 +173,6 @@ public class Data_Entry_Master_File extends JFrame{
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mnFile.add(mntmLogout);
 		
-//		mnFile.add(mntmRefresh);
-		
 		JMenu mnTools = new JMenu("Tools");
 		menuBar.add(mnTools);
 		
@@ -195,8 +189,6 @@ public class Data_Entry_Master_File extends JFrame{
 		JMenuItem mntmSearchMusic = new JMenuItem("Search Music");
 		mnTools.add(mntmSearchMusic);
 		
-		JMenuItem mntmClearDatabase = new JMenuItem("Clear Database");
-		mnTools.add(mntmClearDatabase);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -583,14 +575,15 @@ public class Data_Entry_Master_File extends JFrame{
 		gbc_logged_in.gridy = 0;
 		userCard.add(logged_in, gbc_logged_in);
 		GridBagLayout gbl_logged_in = new GridBagLayout();
-		gbl_logged_in.columnWidths = new int[]{0, 351, 0};
+		gbl_logged_in.columnWidths = new int[]{292, 0, 0, 64, 153, 0};
 		gbl_logged_in.rowHeights = new int[]{0, 0};
-		gbl_logged_in.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_logged_in.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_logged_in.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		logged_in.setLayout(gbl_logged_in);
 		
 		JLabel lblUsername = new JLabel("Username");
 		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
+		gbc_lblUsername.anchor = GridBagConstraints.WEST;
 		gbc_lblUsername.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUsername.gridx = 0;
 		gbc_lblUsername.gridy = 0;
@@ -599,9 +592,10 @@ public class Data_Entry_Master_File extends JFrame{
 		JButton btnLogout = new JButton("Logout");
 		GridBagConstraints gbc_btnLogout = new GridBagConstraints();
 		gbc_btnLogout.anchor = GridBagConstraints.EAST;
-		gbc_btnLogout.gridx = 1;
+		gbc_btnLogout.gridx = 4;
 		gbc_btnLogout.gridy = 0;
 		logged_in.add(btnLogout, gbc_btnLogout);
+//		btnLogout.addActionListener(toLoginPanel);
 		
 		JPanel userCards = new JPanel();
 		GridBagConstraints gbc_userCards = new GridBagConstraints();
@@ -628,7 +622,7 @@ public class Data_Entry_Master_File extends JFrame{
 		gbc_output_Panel.gridy = 0;
 		userCards.add(output_Panel, gbc_output_Panel);
 		GridBagLayout gbl_output_Panel = new GridBagLayout();
-		gbl_output_Panel.columnWidths = new int[]{0, 312, 0};
+		gbl_output_Panel.columnWidths = new int[]{0, 441, 0};
 		gbl_output_Panel.rowHeights = new int[]{0, 0};
 		gbl_output_Panel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_output_Panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
@@ -647,33 +641,40 @@ public class Data_Entry_Master_File extends JFrame{
 		toolBar.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{119, 0};
-		gbl_panel.rowHeights = new int[]{31, 0, 0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblSearchMusic = new JLabel("Search Music");
+		JLabel lblSearchMusic = new JLabel("Show Table");
 		GridBagConstraints gbc_lblSearchMusic = new GridBagConstraints();
 		gbc_lblSearchMusic.insets = new Insets(0, 0, 5, 0);
 		gbc_lblSearchMusic.gridx = 0;
 		gbc_lblSearchMusic.gridy = 0;
 		panel.add(lblSearchMusic, gbc_lblSearchMusic);
 		
-		JCheckBox chckbxSongTitle = new JCheckBox("Song Title");
-		GridBagConstraints gbc_chckbxSongTitle = new GridBagConstraints();
-		gbc_chckbxSongTitle.anchor = GridBagConstraints.WEST;
-		gbc_chckbxSongTitle.insets = new Insets(0, 0, 5, 0);
-		gbc_chckbxSongTitle.gridx = 0;
-		gbc_chckbxSongTitle.gridy = 1;
-		panel.add(chckbxSongTitle, gbc_chckbxSongTitle);
+		JComboBox comboBox = new JComboBox();
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 0;
+		gbc_comboBox.gridy = 1;
+		panel.add(comboBox, gbc_comboBox);
 		
-		JCheckBox chckbxArtistTitle = new JCheckBox("Artist");
-		GridBagConstraints gbc_chckbxArtistTitle = new GridBagConstraints();
-		gbc_chckbxArtistTitle.anchor = GridBagConstraints.WEST;
-		gbc_chckbxArtistTitle.insets = new Insets(0, 0, 5, 0);
-		gbc_chckbxArtistTitle.gridx = 0;
-		gbc_chckbxArtistTitle.gridy = 2;
-		panel.add(chckbxArtistTitle, gbc_chckbxArtistTitle);
+		JLabel lblSearchColumn = new JLabel("By Column");
+		GridBagConstraints gbc_lblSearchColumn = new GridBagConstraints();
+		gbc_lblSearchColumn.insets = new Insets(0, 0, 5, 0);
+		gbc_lblSearchColumn.gridx = 0;
+		gbc_lblSearchColumn.gridy = 2;
+		panel.add(lblSearchColumn, gbc_lblSearchColumn);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_1.gridx = 0;
+		gbc_comboBox_1.gridy = 3;
+		panel.add(comboBox_1, gbc_comboBox_1);
 		
 		searchEntry = new JTextField();
 		searchEntry.setText(" ");
@@ -681,44 +682,92 @@ public class Data_Entry_Master_File extends JFrame{
 		gbc_searchEntry.insets = new Insets(0, 0, 5, 0);
 		gbc_searchEntry.fill = GridBagConstraints.HORIZONTAL;
 		gbc_searchEntry.gridx = 0;
-		gbc_searchEntry.gridy = 3;
+		gbc_searchEntry.gridy = 4;
 		panel.add(searchEntry, gbc_searchEntry);
 		searchEntry.setColumns(10);
+		
+		JLabel lblOptions = new JLabel("Options");
+		GridBagConstraints gbc_lblOptions = new GridBagConstraints();
+		gbc_lblOptions.insets = new Insets(0, 0, 5, 0);
+		gbc_lblOptions.gridx = 0;
+		gbc_lblOptions.gridy = 5;
+		panel.add(lblOptions, gbc_lblOptions);
 		
 		JButton searchMusicRecords = new JButton("Search");
 		GridBagConstraints gbc_searchMusicRecords = new GridBagConstraints();
 		gbc_searchMusicRecords.insets = new Insets(0, 0, 5, 0);
 		gbc_searchMusicRecords.fill = GridBagConstraints.HORIZONTAL;
 		gbc_searchMusicRecords.gridx = 0;
-		gbc_searchMusicRecords.gridy = 4;
+		gbc_searchMusicRecords.gridy = 6;
 		panel.add(searchMusicRecords, gbc_searchMusicRecords);
+		searchMusicRecords.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table = new JTable(DataCommands.searchRecords(searchEntry.getText()));
+				} catch (SQLException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+			}
+		});
+		
+		JButton btnPrintFileOf = new JButton("Print Table");
+		GridBagConstraints gbc_btnPrintFileOf = new GridBagConstraints();
+		gbc_btnPrintFileOf.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnPrintFileOf.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPrintFileOf.gridx = 0;
+		gbc_btnPrintFileOf.gridy = 7;
+		panel.add(btnPrintFileOf, gbc_btnPrintFileOf);
+		
+		JButton btnBargainBin = new JButton("Bargain Bin");
+		GridBagConstraints gbc_btnBargainBin = new GridBagConstraints();
+		gbc_btnBargainBin.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnBargainBin.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBargainBin.gridx = 0;
+		gbc_btnBargainBin.gridy = 8;
+		panel.add(btnBargainBin, gbc_btnBargainBin);
+		
+		JButton btnPurchase = new JButton("Add Purchase");
+		GridBagConstraints gbc_btnPurchase = new GridBagConstraints();
+		gbc_btnPurchase.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnPurchase.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPurchase.gridx = 0;
+		gbc_btnPurchase.gridy = 9;
+		panel.add(btnPurchase, gbc_btnPurchase);
+		
+		JLabel lblEditing = new JLabel("Editing");
+		GridBagConstraints gbc_lblEditing = new GridBagConstraints();
+		gbc_lblEditing.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEditing.gridx = 0;
+		gbc_lblEditing.gridy = 12;
+		panel.add(lblEditing, gbc_lblEditing);
+		
+		JButton btnDelete = new JButton("Delete Selected");
+		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
+		gbc_btnDelete.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDelete.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDelete.gridx = 0;
+		gbc_btnDelete.gridy = 13;
+		panel.add(btnDelete, gbc_btnDelete);
+		
+		JButton btnDeleteAll = new JButton("Delete All");
+		GridBagConstraints gbc_btnDeleteAll = new GridBagConstraints();
+		gbc_btnDeleteAll.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDeleteAll.gridx = 0;
+		gbc_btnDeleteAll.gridy = 14;
+		panel.add(btnDeleteAll, gbc_btnDeleteAll);
+		
+		JList list = new JList();
+		GridBagConstraints gbc_list = new GridBagConstraints();
+		gbc_list.fill = GridBagConstraints.BOTH;
+		gbc_list.gridx = 1;
+		gbc_list.gridy = 0;
+		output_Panel.add(list, gbc_list);
 		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//Search tools
 		////////////////////////////////////////////////////////////////////////////////////////////
-		JTabbedPane Music = new JTabbedPane(JTabbedPane.TOP);
-		GridBagConstraints gbc_Music = new GridBagConstraints();
-		gbc_Music.fill = GridBagConstraints.BOTH;
-		gbc_Music.gridx = 1;
-		gbc_Music.gridy = 0;
-		output_Panel.add(Music, gbc_Music);
-		
-		JPanel Records = new JPanel();
-		Music.addTab("Records", null, Records, null);
-		GridBagLayout gbl_Records = new GridBagLayout();
-		gbl_Records.columnWidths = new int[]{0, 0};
-		gbl_Records.rowHeights = new int[]{0, 0};
-		gbl_Records.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_Records.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		Records.setLayout(gbl_Records);
-		
-		table = new JTable();
-		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.fill = GridBagConstraints.BOTH;
-		gbc_table.gridx = 0;
-		gbc_table.gridy = 0;
-		Records.add(table, gbc_table);
-		
+				
 		//OUTPUT END<--------------------------------------------------------------------->
 		
 		//addUserResult Start
@@ -746,6 +795,10 @@ public class Data_Entry_Master_File extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				try{
 					DataCommands.DataConnect(txtYourUsername.getText(),txtYourPassword.getText());
+//					Sets and constructs the database tables
+					//Having odd problems.
+					DataBaseConstructor.assignTables();
+					DataBaseConstructor.createDataTables();
 				}catch (ClassNotFoundException ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
@@ -813,21 +866,11 @@ public class Data_Entry_Master_File extends JFrame{
 				cl.show(contentPane,"addCosignor");
 			}
 		};
-		searchMusicRecords.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table = new JTable(DataCommands.searchRecords(searchEntry.getText()));
-				} catch (SQLException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				}
-			}
-		});
-		mntmClearDatabase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DataCommands.dropAll();
-			}
-		});
+//		mntmClearDatabase.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				DataCommands.dropAll();
+//			}
+//		});
 		btnAddCosignor.addActionListener(new ActionListener() {
 			Cosignor newCosignor = new Cosignor(cosignorName.getText(),coPhoneNum.getText());
 			public void actionPerformed(ActionEvent e) {
@@ -836,7 +879,6 @@ public class Data_Entry_Master_File extends JFrame{
 		});
 		btnLogin.addActionListener(toUserPanel);
 		mntmSearchMusic.addActionListener(toUserPanel);
-		btnLogout.addActionListener(toLoginPanel);
 		newUserCancel.addActionListener(toLoginPanel);
 		returnToLogin.addActionListener(toLoginPanel);
 		mntmLogout.addActionListener(toLoginPanel);
