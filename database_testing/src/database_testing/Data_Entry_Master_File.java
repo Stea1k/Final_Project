@@ -85,8 +85,8 @@ public class Data_Entry_Master_File extends JFrame{
 		
 //		Sets and constructs the database tables
 		//Having odd problems.
-//		DataBaseConstructor.assignTables();
-//		DataBaseConstructor.createDataTables();
+		DataBaseConstructor.assignTables();
+		DataBaseConstructor.createDataTables();
 		
 		
 //		Music hellsbells = new Music("Hell's Bells", "ACDC");
@@ -189,8 +189,8 @@ public class Data_Entry_Master_File extends JFrame{
 		JMenuItem mntmAddMusic = new JMenuItem("Add Music");
 		mnTools.add(mntmAddMusic);
 		
-		JMenuItem mntmAddCosigner = new JMenuItem("Add Cosigner");
-		mnTools.add(mntmAddCosigner);
+		JMenuItem mntmAddCosignor = new JMenuItem("Add Cosignor");
+		mnTools.add(mntmAddCosignor);
 		
 		JMenuItem mntmSearchMusic = new JMenuItem("Search Music");
 		mnTools.add(mntmSearchMusic);
@@ -257,23 +257,23 @@ public class Data_Entry_Master_File extends JFrame{
 		addCosignor.setLayout(gbl_addCosignor);
 		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		//Add Cosigner Start<------------------------------------------------------------------>
+		//Add Cosignor Start<------------------------------------------------------------------>
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		JLabel lblAddCosigner = new JLabel("Add Cosigner");
-		GridBagConstraints gbc_lblAddCosigner = new GridBagConstraints();
-		gbc_lblAddCosigner.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAddCosigner.gridx = 1;
-		gbc_lblAddCosigner.gridy = 0;
-		addCosignor.add(lblAddCosigner, gbc_lblAddCosigner);
+		JLabel lblAddCosignor = new JLabel("Add Cosignor");
+		GridBagConstraints gbc_lblAddCosignor = new GridBagConstraints();
+		gbc_lblAddCosignor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddCosignor.gridx = 1;
+		gbc_lblAddCosignor.gridy = 0;
+		addCosignor.add(lblAddCosignor, gbc_lblAddCosignor);
 		
-		JLabel lblCosignerName = new JLabel("Cosigner Name");
-		GridBagConstraints gbc_lblCosignerName = new GridBagConstraints();
-		gbc_lblCosignerName.anchor = GridBagConstraints.WEST;
-		gbc_lblCosignerName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCosignerName.gridx = 1;
-		gbc_lblCosignerName.gridy = 2;
-		addCosignor.add(lblCosignerName, gbc_lblCosignerName);
+		JLabel lblCosignorName = new JLabel("Cosignor Name");
+		GridBagConstraints gbc_lblCosignorName = new GridBagConstraints();
+		gbc_lblCosignorName.anchor = GridBagConstraints.WEST;
+		gbc_lblCosignorName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosignorName.gridx = 1;
+		gbc_lblCosignorName.gridy = 2;
+		addCosignor.add(lblCosignorName, gbc_lblCosignorName);
 		
 		cosignorName = new JTextField();
 		cosignorName.setText(" ");
@@ -285,13 +285,13 @@ public class Data_Entry_Master_File extends JFrame{
 		addCosignor.add(cosignorName, gbc_cosignorName);
 		cosignorName.setColumns(10);
 		
-		JLabel lblCosignerPhoneNumber = new JLabel("Cosigner Phone Number");
-		GridBagConstraints gbc_lblCosignerPhoneNumber = new GridBagConstraints();
-		gbc_lblCosignerPhoneNumber.anchor = GridBagConstraints.EAST;
-		gbc_lblCosignerPhoneNumber.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCosignerPhoneNumber.gridx = 1;
-		gbc_lblCosignerPhoneNumber.gridy = 3;
-		addCosignor.add(lblCosignerPhoneNumber, gbc_lblCosignerPhoneNumber);
+		JLabel lblCosignorPhoneNumber = new JLabel("Cosignor Phone Number");
+		GridBagConstraints gbc_lblCosignorPhoneNumber = new GridBagConstraints();
+		gbc_lblCosignorPhoneNumber.anchor = GridBagConstraints.EAST;
+		gbc_lblCosignorPhoneNumber.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosignorPhoneNumber.gridx = 1;
+		gbc_lblCosignorPhoneNumber.gridy = 3;
+		addCosignor.add(lblCosignorPhoneNumber, gbc_lblCosignorPhoneNumber);
 		
 		coPhoneNum = new JTextField();
 		coPhoneNum.setText(" ");
@@ -318,19 +318,19 @@ public class Data_Entry_Master_File extends JFrame{
 		addCosignor.add(btnReturnToSearch, gbc_btnReturnToSearch);
 		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		//Add Cosigner End<-------------------------------------------------------------------->
+		//Add Cosignor End<-------------------------------------------------------------------->
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 	  //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		//Add Music Start<--------------------------------------------------------------------->
 		////////////////////////////////////////////////////////////////////////////////////////
 			
-		JLabel lblCosigner = new JLabel("Cosigner");
-		GridBagConstraints gbc_lblCosigner = new GridBagConstraints();
-		gbc_lblCosigner.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCosigner.gridx = 0;
-		gbc_lblCosigner.gridy = 0;
-		addMusic.add(lblCosigner, gbc_lblCosigner);
+		JLabel lblCosignor = new JLabel("Cosignor");
+		GridBagConstraints gbc_lblCosignor = new GridBagConstraints();
+		gbc_lblCosignor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCosignor.gridx = 0;
+		gbc_lblCosignor.gridy = 0;
+		addMusic.add(lblCosignor, gbc_lblCosignor);
 		
 		JLabel lblAddMusicFrom = new JLabel("Add Music From File");
 		GridBagConstraints gbc_lblAddMusicFrom = new GridBagConstraints();
@@ -774,7 +774,7 @@ public class Data_Entry_Master_File extends JFrame{
 				cl.show(contentPane,loginPanel);
 				resetUsername();
 				resetPassword();
-				DataCommands.toggleLoggedIn();
+				DataCommands.setLoggedInFalse();
 				pack();
 			}
 		};
@@ -829,9 +829,9 @@ public class Data_Entry_Master_File extends JFrame{
 			}
 		});
 		btnAddCosignor.addActionListener(new ActionListener() {
-			Cosigner newCosigner = new Cosigner(cosignorName.getText(),coPhoneNum.getText());
+			Cosignor newCosignor = new Cosignor(cosignorName.getText(),coPhoneNum.getText());
 			public void actionPerformed(ActionEvent e) {
-				DataCommands.newCosigner(newCosigner);
+				DataCommands.newCosignor(newCosignor);
 			}
 		});
 		btnLogin.addActionListener(toUserPanel);
@@ -843,6 +843,6 @@ public class Data_Entry_Master_File extends JFrame{
 		btnNewUser.addActionListener(toNewUser);
 		newUserAdd.addActionListener(runCheck);
 		mntmAddMusic.addActionListener(addMusicPanel);
-		mntmAddCosigner.addActionListener(addCosignorPanel);
+		mntmAddCosignor.addActionListener(addCosignorPanel);
 	}
 }

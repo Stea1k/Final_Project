@@ -38,6 +38,18 @@ public class DataCommands {
 		}else{loggedIn = true;}
 	}
 	
+	protected static void setLoggedInTrue(){
+		if(!loggedIn){
+			loggedIn = true;
+		}
+	}
+	
+	protected static void setLoggedInFalse(){
+		if(loggedIn){
+			loggedIn = false;
+		}
+	}
+	
 	//Presets artist and title selections on the music viewer to false.
 	//When the checkbox is selected, the switch will initiate.
 	
@@ -85,7 +97,7 @@ public class DataCommands {
 			try{
 			sqlCom = conn.createStatement();
 			System.out.println("connection established");
-			loggedIn = true;
+			setLoggedInTrue();
 			}catch(SQLException e){
 				e.printStackTrace(System.err);
 			}
@@ -123,7 +135,7 @@ public class DataCommands {
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
-					"INSERT INTO USERS VALUES"
+					"insert into USERS values"
 					+"("
 					+user.getUserName()+","
 					+user.getUserType()+","
@@ -146,11 +158,11 @@ public class DataCommands {
 		}
 		return success;
 	}
-	public static void newCosigner(Cosigner co){
+	public static void newCosignor(Cosignor co){
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
-					"INSERT INTO COSIGNOR VALUES"
+					"insert into COSIGNOR values"
 					+ "("
 					+ co.getName()+","
 					+ co.getPhone()+","
@@ -166,9 +178,9 @@ public class DataCommands {
 		try{
 			sqlCom = conn.createStatement();
 			sqlCom.executeQuery(
-					"LOAD DATA INFILE "
+					"load data infile "
 					+file
-					+" INTO TABLE RECORDS"
+					+" into table RECORDS"
 					);
 		}catch(Exception e){
 			e.printStackTrace(System.err);
@@ -181,17 +193,17 @@ public class DataCommands {
 			ResultSet dataFromRecords = null;
 			if(artist && !title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT title,artist,price "
-						+ "FROM RECORDS WHERE artist LIKE ("+entry+")");
+						"select title,artist,price "
+						+ "from RECORDS where artist like ("+entry+")");
 			}else if(!artist && title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT title,artist,price "
-						+ "FROM RECORDS WHERE title LIKE ("+entry+")");
+						"select title,artist,price "
+						+ "from RECORDS where title like ("+entry+")");
 			}else if(artist && title){
 				dataFromRecords = sqlCom.executeQuery(
-						"SELECT title,artist,price "
-						+ "FROM RECORDS WHERE title LIKE ("+entry+")"
-								+ " OR artist LIKE ("+entry+")");
+						"select title,artist,price "
+						+ "from RECORDS where title like ("+entry+")"
+								+ " or artist like ("+entry+")");
 			}
 			//Ideas for this came from Paul Vargas (Simplest Code to populate JTable from result set, Stackoverflow)
 			ResultSetMetaData rsmd = dataFromRecords.getMetaData();

@@ -1,6 +1,6 @@
 package database_testing;
 
-public class Cosigner{
+public class Cosignor{
 	private String Name;
 	private String phone;
 	
@@ -20,7 +20,7 @@ public class Cosigner{
 		return this.phone;
 	}
 	
-	public Cosigner(String name,String phone){
+	public Cosignor(String name,String phone){
 		setName(name);
 		setPhone(phone);
 	}
