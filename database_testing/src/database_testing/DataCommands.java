@@ -19,7 +19,7 @@ public class DataCommands {
 	
 	private static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static String protocol = "jdbc:derby:";
-	private static String dbName = "Music";
+	private static String dbName = "MUSIC";
 	
 	//root
 	private static String USER;
@@ -79,10 +79,11 @@ public class DataCommands {
 	public static void dropAll(){
 		try{
 			sqlCom = conn.createStatement();
-			Object drop = sqlCom.executeQuery(
-					"DROP DATABASE MUSIC"
+			Object drop = sqlCom.executeUpdate(
+					"drop database MUSIC"
 					);
 			sqlCom.close();
+			System.out.println("Database successfully deleted");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

@@ -28,8 +28,7 @@ public class DataBaseConstructor extends DataCommands{
 				+ "userPass varchar(20) not null, "
 				+ "userPhone varchar(10) not null,"
 				+ "userEmail varchar(20),"
-				+ "primary key(userID)"
-				+ ")");
+				+ "primary key(userID))");
 		sqlQueries.add(createTable);
 		setTableToCreate(
 				"create table COSIGNOR"
@@ -39,8 +38,7 @@ public class DataBaseConstructor extends DataCommands{
 				//end of used code
 				+ "cosignorName varchar(20) not null,"
 				+ "cosignorPhone varchar(20) not null,"
-				+ "Primary key(cosignorID)"
-				+ ")");
+				+ "Primary key(cosignorID))");
 		sqlQueries.add(createTable);
 		setTableToCreate(
 				"create table RECORDS"
@@ -50,8 +48,7 @@ public class DataBaseConstructor extends DataCommands{
 				+ "price numeric not null,"
 				+ "dateAdded timestamp,"
 				+ "cosignorID int not null,"
-				+ "Primary Key (musicID),"
-				+ ")");
+				+ "Primary Key (musicID))");
 		sqlQueries.add(createTable);
 		setTableToCreate(
 				"create table SALES"
@@ -60,8 +57,7 @@ public class DataBaseConstructor extends DataCommands{
 				+ "date DATE,"
 				+ "musicID integer not null,"
 				+ "userID integer not null,"
-				+ "Primary key(salesID)"
-				+ ")");
+				+ "Primary key(salesID))");
 		sqlQueries.add(createTable);
 	}
 	
@@ -72,10 +68,11 @@ public class DataBaseConstructor extends DataCommands{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(int x=0; x <= sqlQueries.size();x ++){
+		for(int x=0; x < sqlQueries.size();x ++){
 			try{
 				sqlCom = conn.createStatement();
-				Object Table = sqlCom.executeQuery(sqlQueries.get(x));
+				String tableGenerator = sqlQueries.get(x);
+				Object Table = sqlCom.executeUpdate(tableGenerator);
 			}catch(SQLException e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
