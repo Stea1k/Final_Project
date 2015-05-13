@@ -1,3 +1,5 @@
+//the selection class and all of it's relevant attributes. intended to make sql queries easier. not used much.
+
 package database_testing;
 
 public class Selection {
