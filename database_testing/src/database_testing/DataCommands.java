@@ -187,25 +187,27 @@ public class DataCommands {
 			e.printStackTrace(System.err);
 		}
 	}
-	public static DefaultTableModel searchRecords(String entry) throws SQLException{
+	public static ArrayList<String> getTableCols(String table) throws SQLException{
+		DefaultTableModel def = new DefaultTableModel();
+		ArrayList<String> cNames = new ArrayList<String>();
+		sqlCom = conn.createStatement();
+		ResultSet getTable = sqlCom.executeQuery(
+				"select * from "+table);
+		ResultSetMetaData rsmd = getTable.getMetaData();
+		int cCount = rsmd.getColumnCount();
+		for(int c = 1; c < cCount; c ++){
+			cNames.add(rsmd.getColumnName(c));
+		}
+		return cNames;
+	}
+	public static DefaultTableModel searchRecords(String Table, String entry) throws SQLException{
 		DefaultTableModel def = new DefaultTableModel();
 		try{
 			sqlCom = conn.createStatement();
 			ResultSet dataFromRecords = null;
-			if(artist && !title){
-				dataFromRecords = sqlCom.executeQuery(
-						"select title,artist,price "
-						+ "from RECORDS where artist like ("+entry+")");
-			}else if(!artist && title){
-				dataFromRecords = sqlCom.executeQuery(
-						"select title,artist,price "
-						+ "from RECORDS where title like ("+entry+")");
-			}else if(artist && title){
-				dataFromRecords = sqlCom.executeQuery(
-						"select title,artist,price "
-						+ "from RECORDS where title like ("+entry+")"
-								+ " or artist like ("+entry+")");
-			}
+			
+			
+			
 			//Ideas for this came from Paul Vargas (Simplest Code to populate JTable from result set, Stackoverflow)
 			ResultSetMetaData rsmd = dataFromRecords.getMetaData();
 			

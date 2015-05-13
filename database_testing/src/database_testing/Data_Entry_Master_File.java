@@ -653,7 +653,8 @@ public class Data_Entry_Master_File extends JFrame{
 		gbc_lblSearchMusic.gridy = 0;
 		panel.add(lblSearchMusic, gbc_lblSearchMusic);
 		
-		JComboBox comboBox = new JComboBox();
+		String[] Tables = {"USERS","COSIGNOR","RECORDS","SALES"};
+		JComboBox comboBox = new JComboBox(Tables);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -700,16 +701,16 @@ public class Data_Entry_Master_File extends JFrame{
 		gbc_searchMusicRecords.gridx = 0;
 		gbc_searchMusicRecords.gridy = 6;
 		panel.add(searchMusicRecords, gbc_searchMusicRecords);
-		searchMusicRecords.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table = new JTable(DataCommands.searchRecords(searchEntry.getText()));
-				} catch (SQLException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				}
-			}
-		});
+//		searchMusicRecords.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					table = new JTable(DataCommands.searchRecords(searchEntry.getText()));
+//				} catch (SQLException ex) {
+//					// TODO Auto-generated catch block
+//					ex.printStackTrace();
+//				}
+//			}
+//		});
 		
 		JButton btnPrintFileOf = new JButton("Print Table");
 		GridBagConstraints gbc_btnPrintFileOf = new GridBagConstraints();
